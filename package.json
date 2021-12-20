@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Personal Website",
   "main": "index.php",
-  "scripts": {
-    "heroku-prebuild": "yarn install"
-  },
+  "scripts": {},
   "author": "Jérémy Froment <jeremyfroment@yahoo.fr>",
   "license": "ISC",
   "dependencies": {
