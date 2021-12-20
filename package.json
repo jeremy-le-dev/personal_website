@@ -4,8 +4,7 @@
   "description": "Personal Website",
   "main": "index.php",
   "scripts": {
-    "heroku-prebuild": "yarn install",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-prebuild": "yarn install"
   },
   "author": "Jérémy Froment <jeremyfroment@yahoo.fr>",
   "license": "ISC",
