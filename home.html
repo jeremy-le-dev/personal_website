@@ -18,15 +18,15 @@
   </div>
 
   <!-- Container principal -->
-  <div class="container mx-auto px-20">
+  <div class="container-fluid md:container mx-auto px-5 md:px-20">
 
     <!-- Titre et réseaux sociaux -->
-    <section class="flex py-14">
+    <section class="flex flex-wrap py-14">
       <div class="flex-auto">
         <h1 class="font-extrabold text-5xl">Jérémy Froment</h1>
         <h2 class="text-lg font-medium pt-2">Learn more about my skills and projects here.</h2>
       </div>
-      <div class="flex space-x-4 justify-end">
+      <div class="shrink-0 flex space-x-4 justify-end">
         <a target="_blank" href="https://www.linkedin.com/in/jeremyfroment/" class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
           <i class="fab fa-linkedin fa-4x"></i>
         </a>
@@ -40,44 +40,52 @@
     </section>
 
     <!-- Aperçu rapide -->
-    <section class="py-14">
+    <section class="py-5 md:py-14">
       <div class="font-bold text-2xl">Quick overview.</div>
-      <div class="flex rounded-lg p-5 mt-5 bg-gray-100 font-semibold dark:bg-gray-800">
-        <div class="flex-none h-full w-1/5">
-          <img class="rounded-lg w-full h-full p-3 ml-2" src="./assets/photo-profil-jeremy-froment.png" alt="Photo Jérémy Froment">
+      <div class="flex flex-wrap rounded-lg p-5 mt-5 bg-gray-100 font-semibold dark:bg-gray-800">
+        <div class="flex-none h-full w-full md:w-1/5">
+          <img class="rounded-lg w-full h-full p-3 md:ml-2" src="./assets/photo-profil-jeremy-froment.png" alt="Photo Jérémy Froment">
         </div>
-        <div class="flex-auto ml-8 mt-8">
+        <div class="flex-auto ml-3 mt-8 md:ml-8 md:mt-8">
           <span class="text-3xl">Hi. I'm Jérémy, nice to meet you.</span>
           <br>
           <br>
           <span>I am a French developer who would like you to know more about him. I'm passionate about computer science with a tendency to be a perfectionist and I love things well done (especially beautiful things). I also like sports in general. Welcome !</span>
         </div>
       </div>
-      <div class="flex space-x-4 py-5">
-        <div class="rounded-lg text-center p-5 flex-1 bg-gray-100 dark:bg-gray-800">
-          <i class="fas fa-laptop-code fa-5x"></i>
-          <div class="pt-5">Full-Stack Web Developer</div>
+      <div class="flex flex-wrap py-5">
+        <div class="flex-1 p-2">
+          <div class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+            <i class="fas fa-laptop-code fa-5x"></i>
+            <div class="pt-5">Full-Stack Web Developer</div>
+          </div>
         </div>
-        <div class="rounded-lg text-center p-5 flex-1 bg-gray-100 dark:bg-gray-800">
-          <i class="far fa-gem fa-5x"></i>
-          <div class="pt-5">UI/UX Love</div>
+        <div class="flex-1 p-2">
+          <div class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+            <i class="far fa-gem fa-5x"></i>
+            <div class="pt-5">UI/UX Design Lover</div>
+          </div>
         </div>
-        <div class="rounded-lg text-center p-5 flex-1 bg-gray-100 dark:bg-gray-800">
-          <i class="fas fa-map-signs fa-5x"></i>
-          <div class="pt-5">Agile Reference</div>
+        <div class="flex-1 p-2">
+          <div class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+            <i class="fas fa-map-signs fa-5x"></i>
+            <div class="pt-5">Agile Reference</div>
+          </div>
         </div>
-        <div class="rounded-lg text-center p-5 flex-1 bg-gray-100 dark:bg-gray-800">
-          <i class="fas fa-people-arrows fa-5x"></i>
-          <div class="pt-5">Team Management</div>
+        <div class="flex-1 p-2">
+          <div class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+            <i class="fas fa-people-arrows fa-5x"></i>
+            <div class="pt-5">Team Management</div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Compétences -->
-    <section class="py-14">
+    <section class="py-8 md:py-14">
       <div class="font-bold text-2xl">Developer Skills.</div>
       <div class="rounded-lg p-5 mt-5 bg-gray-100 font-semibold dark:bg-gray-800">
-        <div class="px-5 py-3 flex items-stretch">
+        <div class="px-5 py-3 flex flex-wrap items-stretch">
           <div class="flex-none w-40 leading-10 self-start">JAVASCRIPT</div>
           <div class="flex-auto self-start">
             <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
@@ -87,9 +95,9 @@
               VanillaJS, AngularJS, Vue, jQuery, Phaser, NodeJS, Svelte, TypeScript, WebPack
             </div>
           </div>
-          <div class="flex-none w-10 leading-10 self-start pl-3 text-xl">90%</div>
+          <div class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">90%</div>
         </div>
-        <div class="px-5 py-3 flex items-stretch">
+        <div class="px-5 py-3 flex flex-wrap items-stretch">
           <div class="flex-none w-40 leading-10 self-start">HTML / CSS</div>
           <div class="flex-auto self-start">
             <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
@@ -99,9 +107,9 @@
               Bootstrap, Tailwind, IonicFramework, Smarty, Handlebars
             </div>
           </div>
-          <div class="flex-none w-10 leading-10 self-start pl-3 text-xl">95%</div>
+          <div class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">95%</div>
         </div>
-        <div class="px-5 py-3 flex items-stretch">
+        <div class="px-5 py-3 flex flex-wrap items-stretch">
           <div class="flex-none w-40 leading-10 self-start">PHP</div>
           <div class="flex-auto self-start">
             <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
@@ -111,19 +119,7 @@
               Slim Framework, Laravel, Phalcon
             </div>
           </div>
-          <div class="flex-none w-10 leading-10 self-start pl-3 text-xl">85%</div>
-        </div>
-        <div class="px-5 py-3 flex items-stretch">
-          <div class="flex-none w-40 leading-10 self-start">PYTHON</div>
-          <div class="flex-auto self-start">
-            <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-              <div class="rounded bg-gray-900 dark:bg-gray-100 h-full" style="width: 40%"></div>
-            </div>
-            <div class="w-full text-xs font-thin pt-1">
-              ~
-            </div>
-          </div>
-          <div class="flex-none w-10 leading-10 self-start pl-3 text-xl">40%</div>
+          <div class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">85%</div>
         </div>
       </div>
     </section>
