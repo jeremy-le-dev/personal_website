@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./node_modules/tailwindcss/dist/tailwind.min.css">
   <link rel="stylesheet" href="./node_modules/tailwindcss/dist/tailwind-dark.min.css">
   <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="./node_modules/aos/dist/aos.css">
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5FG04QB4GB"></script>
   <script>
@@ -32,17 +33,17 @@
     <!-- Titre et réseaux sociaux -->
     <section class="flex flex-wrap py-14">
       <div class="flex-auto">
-        <h1 class="font-extrabold text-5xl">Jérémy Froment</h1>
+        <h1 data-aos="fade-down" class="font-extrabold text-5xl">Jérémy Froment</h1>
         <h2 class="text-lg font-medium pt-2">Learn more about my skills and projects here.</h2>
       </div>
       <div class="shrink-0 flex space-x-4 justify-end">
-        <a target="_blank" href="https://www.linkedin.com/in/jeremyfroment/" class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
+        <a data-aos="fade-down" data-aos-delay="100" target="_blank" href="https://www.linkedin.com/in/jeremyfroment/" class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
           <i class="fab fa-linkedin fa-4x"></i>
         </a>
-        <a target="_blank" href="https://github.com/jeremy-le-dev" class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
+        <a data-aos="fade-down" data-aos-delay="200" target="_blank" href="https://github.com/jeremy-le-dev" class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
           <i class="fab fa-github-square fa-4x"></i>
         </a>
-        <a target="_blank" href="https://twitter.com/jeremy_le_dev" class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
+        <a data-aos="fade-down" data-aos-delay="300" target="_blank" href="https://twitter.com/jeremy_le_dev" class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
           <i class="fab fa-twitter-square fa-4x"></i>
         </a>
       </div>
@@ -51,38 +52,49 @@
     <!-- Aperçu rapide -->
     <section class="py-5 md:py-14">
       <div class="font-bold text-2xl">Quick overview.</div>
-      <div class="flex flex-wrap rounded-lg p-5 mt-5 bg-gray-100 font-semibold dark:bg-gray-800">
+      <div class="flex flex-wrap items-center rounded-lg p-5 mt-5 bg-gray-100 font-semibold dark:bg-gray-800">
         <div class="flex-none h-full w-full md:w-1/5">
-          <img class="rounded-lg w-full h-full p-3 md:ml-2" src="./assets/photo-profil-jeremy-froment-hexagone.png" alt="Photo Jérémy Froment">
+          <img data-aos="fade-left" class="rounded-lg w-full h-full p-3 md:ml-2" src="./assets/photo-profil-jeremy-froment-hexagone.png" alt="Photo Jérémy Froment">
         </div>
-        <div class="flex-auto w-full md:w-3/5 ml-3 md:ml-8 mt-6 md:mt-3 xl:mt-8">
-          <span class="text-3xl">Hi. I'm Jérémy, nice to meet you.</span>
+        <div class="flex-auto w-full md:w-3/5 ml-3 md:ml-8 mt-6 md:mt-0 xl:mt-0">
+          <span class="text-2xl">Hi. I'm Jérémy, nice to meet you.</span>
           <br>
           <br>
-          <span class="text-xl font-normal">I am a French developer who would like you to know more about him. I'm passionate about computer science with a tendency to be a perfectionist and I love things well done (especially beautiful things). I also like sports in general. Welcome !</span>
+          <span class="font-normal">I am a French developer who would like you to know more about him. I'm passionate about computer science with a tendency to be a perfectionist and I love things well done (especially beautiful things). I also like sports in general. Welcome !</span>
+          <br>
+          <br>
+          <div class="w-full md:w-auto lg:w-auto inline-block lg:mr-4">
+            <i class="fas fa-map-pin"></i>&nbsp;&nbsp;<span class="font-normal">Cannes, France</span>
+          </div>
+          <div class="w-full md:w-auto lg:w-auto inline-block lg:mr-4">
+            <i class="fas fa-child"></i>&nbsp;&nbsp;<span class="font-normal"><span id="age"></span>&nbsp;years</span>
+          </div>
+          <div class="w-full md:w-auto lg:w-auto inline-block">
+            <i class="fas fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:jeremyfroment@yahoo.fr" class="font-normal hover:text-blue-600 dark:hover:text-blue-300">jeremyfroment@yahoo.fr</a>
+          </div>
         </div>
       </div>
-      <div class="flex flex-wrap py-5">
+      <div class="flex flex-wrap py-5 px-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
         <div class="flex-1 p-2">
-          <div class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+          <div data-aos="flip-left" data-aos-delay="100" class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
             <i class="fas fa-laptop-code fa-5x"></i>
             <div class="pt-5">Full-Stack Web Developer</div>
           </div>
         </div>
         <div class="flex-1 p-2">
-          <div class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+          <div data-aos="flip-down" data-aos-delay="200" class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
             <i class="far fa-gem fa-5x"></i>
             <div class="pt-5">UI/UX Design Lover</div>
           </div>
         </div>
         <div class="flex-1 p-2">
-          <div class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+          <div data-aos="flip-up" data-aos-delay="300" class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
             <i class="fas fa-map-signs fa-5x"></i>
             <div class="pt-5">Agile Reference</div>
           </div>
         </div>
         <div class="flex-1 p-2">
-          <div class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+          <div data-aos="flip-right" data-aos-delay="400" class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
             <i class="fas fa-people-arrows fa-5x"></i>
             <div class="pt-5">Team Management</div>
           </div>
@@ -98,37 +110,37 @@
           <div class="flex-none w-40 leading-10 self-start">JAVASCRIPT</div>
           <div class="flex-auto self-start">
             <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-              <div class="rounded bg-gray-900 dark:bg-gray-100 h-full" style="width: 90%"></div>
+              <div data-aos="zoom-in-right" class="rounded bg-gray-900 dark:bg-gray-100 h-full" style="width: 90%"></div>
             </div>
             <div class="w-full text-xs font-thin pt-1">
               VanillaJS, AngularJS, Vue, jQuery, Phaser, NodeJS, Svelte, TypeScript, WebPack
             </div>
           </div>
-          <div class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">90%</div>
+          <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">90%</div>
         </div>
         <div class="px-5 py-3 flex flex-wrap items-stretch">
           <div class="flex-none w-40 leading-10 self-start">HTML / CSS</div>
           <div class="flex-auto self-start">
             <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-              <div class="rounded bg-gray-900 dark:bg-gray-100 h-full" style="width: 95%"></div>
+              <div data-aos="zoom-in-right" class="rounded bg-gray-900 dark:bg-gray-100 h-full" style="width: 95%"></div>
             </div>
             <div class="w-full text-xs font-thin pt-1">
               Bootstrap, Tailwind, IonicFramework, Smarty, Handlebars
             </div>
           </div>
-          <div class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">95%</div>
+          <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">95%</div>
         </div>
         <div class="px-5 py-3 flex flex-wrap items-stretch">
           <div class="flex-none w-40 leading-10 self-start">PHP</div>
           <div class="flex-auto self-start">
             <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-              <div class="rounded bg-gray-900 dark:bg-gray-100 h-full" style="width: 85%"></div>
+              <div data-aos="zoom-in-right" class="rounded bg-gray-900 dark:bg-gray-100 h-full" style="width: 85%"></div>
             </div>
             <div class="w-full text-xs font-thin pt-1">
               Slim Framework, Laravel, Phalcon
             </div>
           </div>
-          <div class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">85%</div>
+          <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">85%</div>
         </div>
       </div>
     </section>
@@ -138,7 +150,7 @@
       <div class="font-bold text-2xl">Projects.</div>
       <div class="rounded-lg p-5 mt-5 bg-gray-100 dark:bg-gray-800">
         <div class="flex flex-wrap py-5">
-          <div class="w-full md:w-auto md:flex-1 p-2">
+          <div data-aos="zoom-out-down" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
             <div class="rounded-lg h-full text-center p-5">
               <img src="./assets/case-libertyprim.png" alt="Libertyprim Project">
               <a href="https://www.libertyprim.com/fr/" target="_blank" class="text-xl pt-5 pb-2 block font-bold">Libertyprim</a>
@@ -157,7 +169,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full md:w-auto md:flex-1 p-2">
+          <div data-aos="zoom-out-down" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
             <div class="rounded-lg h-full text-center p-5">
               <img src="./assets/case-quizpop.png" alt="QuizPOP Project">
               <div class="text-xl pt-5 pb-2 font-bold">Quizpop</div>
@@ -176,7 +188,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full md:w-auto md:flex-1 p-2">
+          <div data-aos="zoom-out-down" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
             <div class="rounded-lg h-full text-center p-5">
               <img src="./assets/case-badina.png" alt="Badina Sécurité Incendie I Project">
               <a href="https://www.badina-incendie.fr" target="_blank" class="text-xl pt-5 pb-2 block font-bold">Badina Sécurité Incendie</a>
@@ -191,7 +203,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full md:w-auto md:flex-1 p-2">
+          <div data-aos="zoom-out-down" data-aos-delay="400" class="w-full md:w-auto md:flex-1 p-2">
             <div class="rounded-lg h-full text-center p-5">
               <img src="./assets/case-maiatar.png" alt="Maiatar Project">
               <a href="https://www.maiatar.io" target="_blank" class="text-xl pt-5 pb-2 block font-bold">Maiatar.io</a>
@@ -205,6 +217,79 @@
                 Blockchain
                 <br>
                 VueJs, Tailwind CSS
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formations -->
+    <section class="py-14">
+      <div class="font-bold text-2xl">Formations.</div>
+      <div class="rounded-lg p-5 mt-5 bg-gray-100 dark:bg-gray-800">
+        <div class="flex flex-wrap py-5">
+          <div data-aos="zoom-out-down" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
+            <div class="rounded-lg h-full text-center p-5">
+              <img style="height: 75px; margin: auto;" src="./assets/polytech.png" alt="Polytech Nice Sophia">
+              <div class="text-xl pt-5 block font-bold">Master 2</div>
+              <div class="font-bold pb-2">IFI WEB</div>
+              <div>Polytech Nice Sophia</div>
+              <div>2016-2018</div>
+            </div>
+          </div>
+          <div data-aos="zoom-out-down" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
+            <div class="rounded-lg h-full text-center p-5">
+              <img style="height: 75px; margin: auto;" src="./assets/unice.png" alt="Polytech Nice Sophia">
+              <div class="text-xl pt-5 block font-bold">Licence Professionnelle</div>
+              <div class="font-bold pb-2">SIL IDSE</div>
+              <div>Université Nice Sophia Antipolis</div>
+              <div>2015-2016</div>
+            </div>
+          </div>
+          <div data-aos="zoom-out-down" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
+            <div class="rounded-lg h-full text-center p-5">
+              <img style="height: 75px; margin: auto;" src="./assets/ufip.svg" alt="Polytech Nice Sophia">
+              <div class="text-xl pt-5 block font-bold">BTS</div>
+              <div class="font-bold pb-2">SIO</div>
+              <div>UFIP Business School</div>
+              <div>2013-2015</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiences -->
+    <section class="py-14">
+      <div class="font-bold text-2xl">Experiences.</div>
+      <div class="rounded-lg p-5 mt-5 bg-gray-100 dark:bg-gray-800">
+        <div class="flex flex-wrap py-5">
+          <div data-aos="zoom-out-down" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
+            <div class="rounded-lg h-full text-center p-5">
+              <img style="height: 75px; margin: auto;" src="./assets/educlever.png" alt="Educlever">
+              <div class="text-xl pt-5 block font-bold">Full-Stack Web Developer</div>
+              <div class="text-sm pb-4">Educlever · 2014-now</div>
+              <div>
+                <b>Front-End:</b> JavaScript, VueJS, AngularJS, PhaserJS, VanillaJS, HTML5, CSS3, Sass, Bootstrap, TailwindCSS
+                <br>
+                <b>Back-End:</b> PHP, Laravel, Phalcon, ElasticSearch, NodeJS, SQL
+                <br>
+                <b>Methodologies:</b> Agile, SCRUM, YouTrack, Roadmunk, Reviews, Planning Poker, Retrospective, Sprints
+                <br>
+                <b>Others:</b> Bash, UpSource, GitLab
+                <br>
+                <b>Management:</b> Managing a team of interns
+              </div>
+            </div>
+          </div>
+          <div data-aos="zoom-out-down" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
+            <div class="rounded-lg h-full text-center p-5">
+              <img style="height: 75px; margin: auto;" src="./assets/no-image.png" alt="C&C MPS">
+              <div class="text-xl pt-5 block font-bold">Intern C# Developer</div>
+              <div class="text-sm pb-4">C&C MPS · 2013</div>
+              <div>
+                Creation of Responsive Form/Frame in Visual Studio 2010, for a perfumery company management application.
               </div>
             </div>
           </div>
@@ -234,13 +319,16 @@
         </div>
       </div>
       <hr class="my-5">
-      <div class="text-lg">© 2022 Jérémy Froment. All rights reserved.</div>
+      <div class="text-lg">© <span id="year"></span> Jérémy Froment. All rights reserved.</div>
     </section>
   </div>
 </body>
 </html>
+<script src="./node_modules/aos/dist/aos.js"></script>
 <script>
-    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    AOS.init();
+    setCopyrightYear()
+    setAge();
     setTheme()
 
     /**
@@ -280,5 +368,31 @@
                 }
                 break;
         }
+    }
+
+    /**
+     * Get Age from date
+     * @param date
+     * @returns {number}
+     */
+    function getAge(date) {
+        var diff = Date.now() - date.getTime();
+        var age = new Date(diff);
+        return Math.abs(age.getUTCFullYear() - 1970);
+    }
+
+    /**
+     * Set Age
+     * @param age
+     */
+    function setAge(age) {
+        document.getElementById('age').innerHTML = getAge(new Date(1994, 11, 8));
+    }
+
+    /**
+     * Set Copyright Year
+     */
+    function setCopyrightYear() {
+        document.getElementById("year").innerHTML = new Date().getFullYear();
     }
 </script>
