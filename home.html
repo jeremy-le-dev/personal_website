@@ -23,7 +23,7 @@
 <body class="bg-white text-gray-900 font-sans antialiased dark:bg-gray-900 dark:text-gray-200">
 
   <!-- Theme -->
-  <div class="fixed top-0 right-0 bg-gray-100 rounded-bl-full block w-16 h-16 text-right p-2 dark:bg-gray-800 cursor-pointer hover:text-blue-600 dark:hover:text-blue-300" onclick="setTheme('inverse')">
+  <div class="print-hidden fixed top-0 right-0 bg-gray-100 rounded-bl-full block w-16 h-16 text-right p-2 dark:bg-gray-800 cursor-pointer hover:text-blue-600 dark:hover:text-blue-300" onclick="setTheme('inverse')">
       <i class="fas fa-moon fa-2x"></i>
   </div>
 
@@ -31,12 +31,18 @@
   <div class="container-fluid md:container mx-auto px-5 md:px-20">
 
     <!-- Titre et réseaux sociaux -->
-    <section class="flex flex-wrap py-14">
+    <section class="flex flex-wrap py-14 relative">
       <div class="flex-auto">
         <h1 data-aos="fade-down" class="font-extrabold text-5xl">Jérémy Froment</h1>
         <h2 class="text-lg font-medium pt-2">Learn more about my skills and projects here.</h2>
       </div>
-      <div class="shrink-0 flex space-x-4 justify-end">
+      <div class="absolute top-10 right-10 print-show">
+        <img src="./assets/qrcode.png" alt="QR Code" width="200">
+      </div>
+      <div class="shrink-0 flex space-x-4 justify-end print-hidden mt-3 md:mt-0 lg:mt-0">
+        <a data-aos="fade-down" data-aos-delay="400" target="_blank" href="./assets/Jérémy%20FROMENT%20-%20CV.pdf" download class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
+          <i class="fas fa-download fa-4x p-2"></i>
+        </a>
         <a data-aos="fade-down" data-aos-delay="100" target="_blank" href="https://www.linkedin.com/in/jeremyfroment/" class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
           <i class="fab fa-linkedin fa-4x"></i>
         </a>
@@ -298,7 +304,7 @@
     </section>
 
     <!-- Fin de page -->
-    <section class="py-14">
+    <section class="py-14 print-hidden">
       <div class="flex">
         <div class="flex-1 self-end">
           <h1 class="font-extrabold text-3xl">Jérémy Froment</h1>
@@ -326,10 +332,14 @@
 </html>
 <script src="./node_modules/aos/dist/aos.js"></script>
 <script>
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+
     AOS.init();
     setCopyrightYear()
     setAge();
-    setTheme()
+    setTheme();
+    printMode(params.print);
 
     /**
      * Check if dark theme is applicable
@@ -394,5 +404,23 @@
      */
     function setCopyrightYear() {
         document.getElementById("year").innerHTML = new Date().getFullYear();
+    }
+
+    /**
+     * Set print mode
+     * @param active
+     */
+    function printMode(active) {
+        const allPrintHidden = document.querySelectorAll('.print-hidden');
+        const allPrintShow = document.querySelectorAll('.print-show');
+        if (active) {
+            allPrintHidden.forEach(el => el.style.display = 'none')
+            allPrintShow.forEach(el => el.style.display = 'block')
+            document.querySelectorAll('[data-aos-delay]').forEach(el => el.setAttribute('data-aos-delay', 0));
+            document.querySelectorAll('[data-aos-duration]').forEach(el => el.setAttribute('data-aos-duration', 0));
+        } else {
+            allPrintHidden.forEach(el => el.style.display = 'block')
+            allPrintShow.forEach(el => el.style.display = 'none')
+        }
     }
 </script>
