@@ -2,7 +2,7 @@
   "name": "jeremyfroment.fr",
   "version": "1.0.0",
   "description": "Personal Website",
-  "main": "index.php",
+  "main": "index.html",
   "author": "Jérémy Froment <jeremyfroment@yahoo.fr>",
   "license": "ISC",
   "scripts": {
