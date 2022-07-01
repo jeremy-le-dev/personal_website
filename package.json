@@ -7,7 +7,6 @@
   "license": "ISC",
   "scripts": {
     "serve": "php -S localhost:8080",
-    "build": ""
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
