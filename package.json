@@ -6,7 +6,8 @@
   "author": "Jérémy Froment <jeremyfroment@yahoo.fr>",
   "license": "ISC",
   "scripts": {
-    "serve": "php -S localhost:8080"
+    "serve": "php -S localhost:8080",
+    "postinstall": "mv node_modules utils"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
