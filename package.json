@@ -6,11 +6,14 @@
   "author": "Jérémy Froment <jeremyfroment@yahoo.fr>",
   "license": "ISC",
   "scripts": {
-    "serve": "php -S localhost:8080"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "aos": "^2.3.4",
-    "tailwindcss": "^2.2.19"
+    "tailwindcss": "^2.2.19",
+    "vite": "^4.1.4"
   }
 }
