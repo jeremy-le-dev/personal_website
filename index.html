@@ -29,7 +29,7 @@
 
 <!-- Theme -->
 <div class="print-hidden fixed top-0 right-0 bg-gray-100 rounded-bl-full block w-16 h-16 text-right p-2 dark:bg-gray-800 cursor-pointer hover:text-blue-600 dark:hover:text-blue-300"
-     onclick="setTheme('inverse')">
+     id="btn-change-theme">
     <i class="fas fa-moon fa-2x"></i>
 </div>
 
@@ -46,7 +46,7 @@
             <img src="./assets/qrcode.png" alt="QR Code" width="200">
         </div>
         <div class="shrink-0 flex space-x-4 justify-end print-hidden mt-3 md:mt-0 lg:mt-0">
-            <a data-aos="fade-down" data-aos-delay="400" target="_blank" href="./assets/Jérémy%20FROMENT%20-%20CV.pdf"
+            <a data-aos="fade-down" data-aos-delay="400" target="_blank" id="download-pdf"
                download class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
                 <i class="fas fa-download fa-4x p-2"></i>
             </a>
@@ -419,30 +419,23 @@
 </body>
 </html>
 <script type="module">
+    import pdfURL from "./assets/Jérémy FROMENT - CV.pdf?url";
     import AOS from 'aos';
-
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-
     AOS.init();
-    setCopyrightYear()
-    setAge();
-    setTheme();
-    printMode(params.print);
 
     /**
      * Check if dark theme is applicable
      * @returns {boolean|boolean}
      */
-    function checkIfDarkTheme() {
+    const checkIfDarkTheme = () => {
         return localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
+    };
 
     /**
      * Set Theme by mode
      * @param mode
      */
-    function setTheme(mode) {
+    const setTheme = (mode) => {
         switch (mode) {
             case 'dark':
                 localStorage.theme = 'dark';
@@ -467,39 +460,39 @@
                 }
                 break;
         }
-    }
+    };
 
     /**
      * Get Age from date
      * @param date
      * @returns {number}
      */
-    function getAge(date) {
+    const getAge = (date) => {
         var diff = Date.now() - date.getTime();
         var age = new Date(diff);
         return Math.abs(age.getUTCFullYear() - 1970);
-    }
+    };
 
     /**
      * Set Age
-     * @param age
      */
-    function setAge(age) {
+    const setAge = () => {
         document.getElementById('age').innerHTML = getAge(new Date(1994, 11, 8));
-    }
+    };
 
     /**
      * Set Copyright Year
      */
-    function setCopyrightYear() {
+    const setCopyrightYear = () => {
         document.getElementById("year").innerHTML = new Date().getFullYear();
-    }
+    };
 
     /**
      * Set print mode
      * @param active
      */
-    function printMode(active) {
+    const printMode = (active) => {
+        console.error('print mode');
         const allPrintHidden = document.querySelectorAll('.print-hidden');
         const allPrintShow = document.querySelectorAll('.print-show');
         if (active) {
@@ -511,5 +504,16 @@
             allPrintHidden.forEach(el => el.style.display = 'block')
             allPrintShow.forEach(el => el.style.display = 'none')
         }
-    }
+    };
+
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+
+    document.querySelector("#download-pdf").href = pdfURL;
+    setCopyrightYear()
+    setAge();
+    setTheme();
+    printMode(params.print);
+
+    document.querySelector('#btn-change-theme').addEventListener('click', () => setTheme('inverse'));
 </script>
