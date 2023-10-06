@@ -2,8 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Jérémy Froment Personal Website - learn more about my skills and projects here.</title>
     <link rel="icon" type="image/png" href="./assets/photo-jeremy-froment.png"/>
@@ -24,6 +23,23 @@
 
         gtag('config', 'G-5FG04QB4GB');
     </script>
+    <style>
+        @font-face {
+            font-family: Dela_Gothic_One;
+            src: url('./assets/Dela_Gothic_One/DelaGothicOne-Regular.ttf');
+        }
+
+        .text-5xl,
+        .text-4xl,
+        .text-3xl,
+        .text-2xl,
+        .text-1xl,
+        .text-xl {
+            font-family: Dela_Gothic_One, serif !important;
+            font-weight: lighter;
+            letter-spacing: -1px;
+        }
+    </style>
 </head>
 <body class="bg-white text-gray-900 font-sans antialiased dark:bg-gray-900 dark:text-gray-200">
 
@@ -64,61 +80,62 @@
                 <i class="fab fa-twitter-square fa-4x"></i>
             </a>
         </div>
+    </section>
 
+    <!-- Moi -->
+    <section class="py-5 md:py-14 my-5">
+        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">It's Me.</div>
+        <div class="flex flex-wrap items-center mt-5 font-semibold">
+            <div class="flex-none h-full w-full md:w-1/5">
+                <img data-aos="fade-left" class="rounded-lg w-full h-full" src="./assets/photo-jeremy-froment.png" alt="Photo Jérémy Froment">
+            </div>
+            <div class="flex-auto w-full md:w-3/5 ml-3 md:ml-8 mt-6 md:mt-0 xl:mt-0">
+                <span class="text-2xl" style="font-size: 30px;">Hi. I'm Jérémy, nice to meet you.</span>
+                <br>
+                <div class="w-full md:w-auto lg:w-auto inline-block lg:mr-4 text-sm">
+                    <i class="fas fa-map-pin"></i>&nbsp;&nbsp;<span class="font-normal">Cannes, France</span>
+                </div>
+                <div class="w-full md:w-auto lg:w-auto inline-block lg:mr-4 text-sm">
+                    <i class="fas fa-child"></i>&nbsp;&nbsp;<span class="font-normal"><span id="age"></span>&nbsp;years</span>
+                </div>
+                <div class="w-full md:w-auto lg:w-auto inline-block text-sm">
+                    <i class="fas fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:jeremyfroment@yahoo.fr" class="font-normal hover:text-blue-600 dark:hover:text-blue-300">jeremyfroment@yahoo.fr</a>
+                </div>
+                <br>
+                <br>
+                <span class="text-justify text-normal font-light" style="font-size: 25px;">I am a French developer who would like you to know more about him. I'm passionate about computer science with a tendency to be a perfectionist and I love things well done (especially beautiful things). I also like sports in general. Welcome !</span>
+            </div>
+        </div>
     </section>
 
     <!-- Aperçu rapide -->
-    <section class="py-5 md:py-14">
-        <div class="font-bold text-2xl">Quick overview.</div>
-        <div class="flex flex-wrap items-center rounded-lg p-5 mt-5 bg-gray-100 font-semibold dark:bg-gray-800">
-            <div class="flex-none h-full w-full md:w-1/5">
-                <img data-aos="fade-left" class="rounded-lg w-full h-full" src="./assets/photo-jeremy-froment.png"
-                     alt="Photo Jérémy Froment">
-            </div>
-            <div class="flex-auto w-full md:w-3/5 ml-3 md:ml-8 mt-6 md:mt-0 xl:mt-0">
-                <span class="text-2xl">Hi. I'm Jérémy, nice to meet you.</span>
-                <br>
-                <br>
-                <span class="font-normal">I am a French developer who would like you to know more about him. I'm passionate about computer science with a tendency to be a perfectionist and I love things well done (especially beautiful things). I also like sports in general. Welcome !</span>
-                <br>
-                <br>
-                <div class="w-full md:w-auto lg:w-auto inline-block lg:mr-4">
-                    <i class="fas fa-map-pin"></i>&nbsp;&nbsp;<span class="font-normal">Cannes, France</span>
-                </div>
-                <div class="w-full md:w-auto lg:w-auto inline-block lg:mr-4">
-                    <i class="fas fa-child"></i>&nbsp;&nbsp;<span class="font-normal"><span id="age"></span>&nbsp;years</span>
-                </div>
-                <div class="w-full md:w-auto lg:w-auto inline-block">
-                    <i class="fas fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:jeremyfroment@yahoo.fr"
-                                                                  class="font-normal hover:text-blue-600 dark:hover:text-blue-300">jeremyfroment@yahoo.fr</a>
-                </div>
-            </div>
-        </div>
+    <section class="py-14">
+        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Quick Overview.</div>
         <div class="flex flex-wrap py-5 px-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
             <div class="flex-1 p-2">
                 <div data-aos="flip-left" data-aos-delay="100"
-                     class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+                     class="rounded-lg h-full text-center p-5">
                     <i class="fas fa-laptop-code fa-5x"></i>
                     <div class="pt-5">Full-Stack Web Developer</div>
                 </div>
             </div>
             <div class="flex-1 p-2">
                 <div data-aos="flip-down" data-aos-delay="200"
-                     class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+                     class="rounded-lg h-full text-center p-5">
                     <i class="far fa-gem fa-5x"></i>
                     <div class="pt-5">UI/UX Design Lover</div>
                 </div>
             </div>
             <div class="flex-1 p-2">
                 <div data-aos="flip-up" data-aos-delay="300"
-                     class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+                     class="rounded-lg h-full text-center p-5">
                     <i class="fas fa-map-signs fa-5x"></i>
                     <div class="pt-5">Agile Reference</div>
                 </div>
             </div>
             <div class="flex-1 p-2">
                 <div data-aos="flip-right" data-aos-delay="400"
-                     class="rounded-lg h-full text-center p-5 bg-gray-100 dark:bg-gray-800">
+                     class="rounded-lg h-full text-center p-5">
                     <i class="fas fa-people-arrows fa-5x"></i>
                     <div class="pt-5">Team Management</div>
                 </div>
@@ -128,9 +145,9 @@
 
     <!-- Compétences -->
     <section class="py-8 md:py-14">
-        <div class="font-bold text-2xl">Developer Skills.</div>
-        <div class="rounded-lg p-5 mt-5 bg-gray-100 font-semibold dark:bg-gray-800">
-            <div class="px-5 py-3 flex flex-wrap items-stretch">
+        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Developer Skills.</div>
+        <div class="rounded-lg p-5 pl-0 mt-5 font-semibold">
+            <div class="py-3 flex flex-wrap items-stretch">
                 <div class="flex-none w-40 leading-10 self-start">JAVASCRIPT</div>
                 <div class="flex-auto self-start">
                     <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
@@ -145,7 +162,7 @@
                 <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">95%
                 </div>
             </div>
-            <div class="px-5 py-3 flex flex-wrap items-stretch">
+            <div class="py-3 flex flex-wrap items-stretch">
                 <div class="flex-none w-40 leading-10 self-start">HTML / CSS</div>
                 <div class="flex-auto self-start">
                     <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
@@ -159,7 +176,7 @@
                 <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">95%
                 </div>
             </div>
-            <div class="px-5 py-3 flex flex-wrap items-stretch">
+            <div class="py-3 flex flex-wrap items-stretch">
                 <div class="flex-none w-40 leading-10 self-start">PHP</div>
                 <div class="flex-auto self-start">
                     <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
@@ -173,7 +190,7 @@
                 <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">80%
                 </div>
             </div>
-            <div class="px-5 py-3 flex flex-wrap items-stretch">
+            <div class="py-3 flex flex-wrap items-stretch">
                 <div class="flex-none w-40 leading-10 self-start">BDD</div>
                 <div class="flex-auto self-start">
                     <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
@@ -187,7 +204,7 @@
                 <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">75%
                 </div>
             </div>
-            <div class="px-5 py-3 flex flex-wrap items-stretch">
+            <div class="py-3 flex flex-wrap items-stretch">
                 <div class="flex-none w-40 leading-10 self-start">DEPLOY</div>
                 <div class="flex-auto self-start">
                     <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
@@ -206,10 +223,10 @@
 
     <!-- Projects -->
     <section class="py-14">
-        <div class="font-bold text-2xl">Projects.</div>
-        <div class="rounded-lg p-5 mt-5 bg-gray-100 dark:bg-gray-800">
+        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Projects.</div>
+        <div class="rounded-lg p-5 pl-0 mt-5">
             <div class="flex flex-wrap py-5">
-                <div data-aos="zoom-out-down" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <img src="./assets/case-libertyprim.png" alt="Libertyprim Project">
                         <a href="https://www.libertyprim.com/fr/" target="_blank"
@@ -229,7 +246,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-aos="zoom-out-down" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <img src="./assets/case-quizpop.png" alt="QuizPOP Project">
                         <div class="text-xl pt-5 pb-2 font-bold">Quizpop</div>
@@ -248,7 +265,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-aos="zoom-out-down" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <img src="./assets/case-badina.png" alt="Badina Sécurité Incendie I Project">
                         <a href="https://www.badina-incendie.fr" target="_blank"
@@ -264,7 +281,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-aos="zoom-out-down" data-aos-delay="400" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="400" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <img src="./assets/case-maiatar.png" alt="Maiatar Project">
                         <a href="https://maiatar.jeremyfroment.fr/" target="_blank"
@@ -288,10 +305,10 @@
 
     <!-- Formations -->
     <section class="py-14">
-        <div class="font-bold text-2xl">Formations.</div>
-        <div class="rounded-lg p-5 mt-5 bg-gray-100 dark:bg-gray-800">
+        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Formations.</div>
+        <div class="rounded-lg p-5 pl-0 mt-5">
             <div class="flex flex-wrap py-5">
-                <div data-aos="zoom-out-down" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <img style="height: 75px; margin: auto;" src="./assets/polytech.png" alt="Polytech Nice Sophia">
                         <div class="text-xl pt-5 block font-bold">Master 2</div>
@@ -300,7 +317,7 @@
                         <div>2016-2018</div>
                     </div>
                 </div>
-                <div data-aos="zoom-out-down" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <img style="height: 75px; margin: auto;" src="./assets/unice.png" alt="Polytech Nice Sophia">
                         <div class="text-xl pt-5 block font-bold">Licence Professionnelle</div>
@@ -309,7 +326,7 @@
                         <div>2015-2016</div>
                     </div>
                 </div>
-                <div data-aos="zoom-out-down" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <img style="height: 75px; margin: auto;" src="./assets/ufip.svg" alt="Polytech Nice Sophia">
                         <div class="text-xl pt-5 block font-bold">BTS</div>
@@ -324,10 +341,10 @@
 
     <!-- Experiences -->
     <section class="py-14">
-        <div class="font-bold text-2xl">Experiences.</div>
-        <div class="rounded-lg p-5 mt-5 bg-gray-100 dark:bg-gray-800">
+        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Experiences.</div>
+        <div class="rounded-lg p-5 pl-0 mt-5">
             <div class="flex flex-wrap py-5">
-                <div data-aos="zoom-out-down" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <div style="height: 75px;">
                             <img style="max-width: 100%; max-height: 100%; margin: auto;" src="./assets/dailymotion.png"
@@ -347,7 +364,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-aos="zoom-out-down" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <div style="height: 75px;">
                             <img style="max-width: 100%; max-height: 100%; margin: auto;" src="./assets/educlever.png"
@@ -370,7 +387,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-aos="zoom-out-down" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
+                <div data-aos="flip-left" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
                     <div class="rounded-lg h-full text-center p-5">
                         <div style="height: 75px;">
                             <img style="max-width: 100%; max-height: 100%; margin: auto;" src="./assets/no-image.png"
