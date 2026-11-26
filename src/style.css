@@ -52,8 +52,8 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 /* ---------- Hero ---------- */
 .hero {
     min-height: 100vh;
-    max-width: 640px;
-    display: flex; flex-direction: column; justify-content: center;
+    max-width: 1040px;
+    display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center;
     padding-top: 80px;
 }
 .hero p { margin: 0 0 12px; max-width: 34ch; }
@@ -97,6 +97,53 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 .js .is-in .draw path.fill { fill-opacity: 1; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 
+/* ---------- Portrait (photo from the CV, head popping out of the pentagon) ---------- */
+.portrait {
+    position: relative; width: 100%; max-width: 420px; justify-self: end;
+    perspective: 900px;
+}
+.portrait-img {
+    position: relative; z-index: 1; display: block; width: 100%; height: auto;
+    transform: rotateY(var(--tx, 0deg)) rotateX(var(--ty, 0deg));
+    transition: transform .45s cubic-bezier(0.2, 0.8, 0.2, 1);
+    filter: drop-shadow(0 24px 30px rgba(37, 99, 235, .22));
+    animation: float 6s ease-in-out infinite;
+}
+.portrait-frame, .portrait-doodles { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.portrait-frame { transform: translate(14px, 14px) rotate(3deg); }
+.portrait-frame path { stroke: var(--accent); stroke-width: 2.5; }
+.portrait-doodles { z-index: 2; pointer-events: none; }
+.portrait-doodles .spark { animation: twinkle 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.portrait-doodles .s2 { animation-delay: .8s; }
+.portrait-doodles .s3 { animation-delay: 1.6s; }
+.portrait-tag {
+    position: absolute; z-index: 3; right: -6px; top: 4%;
+    font: 700 18px/1 var(--display); color: var(--accent);
+    transform: rotate(8deg);
+    opacity: 0; transition: opacity .4s ease 1.6s, transform .5s var(--ease) 1.6s;
+}
+.portrait.is-in .portrait-tag { opacity: 1; transform: rotate(-6deg); }
+.js .portrait.reveal { transform: translateY(40px) scale(.96); }
+.js .portrait.reveal.is-in { transform: none; }
+@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+@keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(.55) rotate(45deg); opacity: .6; } }
+
+/* ---------- Device frames for screenshots ---------- */
+.card.phone { width: min(19%, 190px); padding: 8px 8px 0; }
+.iphone {
+    position: relative; padding: 7px; border-radius: 30px;
+    background: #111827; box-shadow: inset 0 0 0 1.5px #4b5563;
+}
+.iphone img { border-radius: 23px; }
+.iphone .island {
+    position: absolute; top: 13px; left: 50%; translate: -50% 0;
+    width: 30%; height: 11px; border-radius: 999px; background: #111827;
+}
+.macbook .mac-screen { padding: 6px 6px 8px; background: #111827; border-radius: 10px 10px 0 0; }
+.macbook .mac-screen img { border-radius: 2px; }
+.macbook .mac-base { height: 9px; margin: 0 -6%; background: linear-gradient(#d1d5db, #9ca3af); border-radius: 0 0 10px 10px; position: relative; }
+.macbook .mac-base::after { content: ""; position: absolute; left: 42%; right: 42%; top: 0; height: 4px; background: #6b7280; border-radius: 0 0 6px 6px; }
+
 /* ---------- Feature ---------- */
 .feature { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
 .feature-art svg { width: 100%; max-width: 420px; }
@@ -121,10 +168,10 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 .rows li:hover { background: var(--soft); }
 
 /* ---------- Draggable gallery ---------- */
-.board { position: relative; height: 660px; margin-top: 40px; touch-action: pan-y; }
+.board { position: relative; height: 740px; margin-top: 40px; touch-action: pan-y; }
 .card {
     position: absolute; left: var(--x); top: var(--y);
-    width: min(46%, 420px); margin: 0;
+    width: min(34%, 330px); margin: 0;
     padding: 8px 8px 0; background: var(--paper);
     border: 1.5px solid var(--ink); border-radius: 12px;
     box-shadow: 0 2px 0 var(--ink);
@@ -201,10 +248,15 @@ body.print .print-show { display: block; }
 @media (max-width: 760px) {
     section, footer { padding: 80px 20px; }
     .feature { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr; gap: 24px; padding-top: 72px; }
+    .portrait { order: -1; max-width: 240px; justify-self: start; }
+    .hero-doodle { display: none; }
+    .card.phone { width: 70%; justify-self: center; }
     .rows a, .rows li > div { grid-template-columns: 1fr auto; gap: 4px 16px; }
     .row-desc { grid-column: 1; grid-row: 2; }
     .row-arr, .row-date { grid-row: 1; grid-column: 2; }
     .board { height: auto; display: grid; gap: 24px; }
+    .portrait-tag { right: -30px; }
     .card { position: relative; left: 0; top: 0; width: 100%; }
 }
 

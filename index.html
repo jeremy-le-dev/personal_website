@@ -11,8 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./src/style.css">
     <script>
-        // Apply the theme before first paint to avoid a flash
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        // White by default; dark only when chosen with the toggle (applied before first paint)
+        if (localStorage.theme === 'dark') {
             document.documentElement.classList.add('dark');
         }
     </script>
@@ -39,6 +39,7 @@
 
     <!-- Hero -->
     <section class="hero" id="top">
+        <div class="hero-text">
         <div class="hero-doodle reveal" aria-hidden="true">
             <svg viewBox="0 0 120 80" class="draw">
                 <path d="M38 14 C24 26 14 34 10 40 C16 47 26 55 38 66"/>
@@ -57,6 +58,19 @@
             <a class="btn" id="download-pdf" download target="_blank">Resume <span class="arr">↓</span></a>
             <a class="btn" href="https://www.linkedin.com/in/jeremyfroment/" target="_blank" rel="noopener">LinkedIn <span class="arr">↗</span></a>
             <a class="btn" href="https://github.com/jeremy-le-dev" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a>
+        </div>
+        </div>
+        <div class="portrait reveal" id="portrait">
+            <svg class="portrait-frame draw" viewBox="0 0 300 310" aria-hidden="true">
+                <path d="M150 110 L282 196 L234 309 L66 309 L18 196 Z"/>
+            </svg>
+            <img class="portrait-img" src="./assets/photo-cv.png" alt="Photo of Jérémy Froment" width="600" height="617">
+            <svg class="portrait-doodles draw" viewBox="0 0 300 310" aria-hidden="true">
+                <path class="spark" d="M30 40 L33 51 L44 54 L33 57 L30 68 L27 57 L16 54 L27 51 Z"/>
+                <path class="spark s2" d="M272 30 L274 37 L281 39 L274 41 L272 48 L270 41 L263 39 L270 37 Z"/>
+                <path class="spark s3" d="M282 206 L284 214 L292 216 L284 218 L282 226 L280 218 L272 216 L280 214 Z"/>
+            </svg>
+            <span class="portrait-tag" aria-hidden="true">that's me!</span>
         </div>
         <img class="print-show qrcode" src="./assets/qrcode.png" alt="QR Code" width="140">
     </section>
@@ -79,8 +93,8 @@
             </svg>
         </div>
         <div class="feature-copy">
-            <h2 class="section-title reveal">I help make video feel like a conversation</h2>
-            <p class="reveal">Since 2023 I've been a key player in the transformation of Ray at Dailymotion, an agentic AI experience that won at the European Video Awards 2026. I own the UI/UX and ship the front-end.</p>
+            <h2 class="section-title reveal">I lead UI/UX on Ray, Dailymotion's agentic AI</h2>
+            <p class="reveal">Since 2023 I've been a key player in the transformation of Ray, an agentic AI experience recognized at the European Video Awards 2026. I design the experience and ship the front-end.</p>
             <div class="btns reveal">
                 <a class="btn" href="#work">My path <span class="arr">→</span></a>
             </div>
@@ -91,6 +105,14 @@
     <section class="projects" id="projects">
         <h2 class="section-title center reveal">Some things I built</h2>
         <ul class="rows reveal">
+            <li><a href="https://www.hoproutine.app" target="_blank" rel="noopener">
+                <span class="row-title">HopRoutine</span>
+                <span class="row-desc">A mobile app that turns kids' morning and bedtime routines into a game.</span>
+                <span class="row-arr">↗</span></a></li>
+            <li><a href="https://delaipour.fr" target="_blank" rel="noopener">
+                <span class="row-title">Delaipour.fr</span>
+                <span class="row-desc">1,000+ sourced guides on how long French paperwork really takes.</span>
+                <span class="row-arr">↗</span></a></li>
             <li><a href="https://www.libertyprim.com/fr/" target="_blank" rel="noopener">
                 <span class="row-title">Libertyprim</span>
                 <span class="row-desc">A marketplace connecting fruit and vegetable professionals.</span>
@@ -116,10 +138,16 @@
         <h2 class="section-title center reveal">From my screenshots folder</h2>
         <p class="note center reveal print-hidden">Toss them around, or click one to zoom in.</p>
         <div class="board" id="board">
-            <figure class="card" style="--r:-5deg;--x:2%;--y:0px"><img src="./assets/case-libertyprim.png" alt="Libertyprim screenshot" draggable="false"><figcaption>Libertyprim</figcaption></figure>
-            <figure class="card" style="--r:4deg;--x:52%;--y:30px"><img src="./assets/case-quizpop.png" alt="Quizpop screenshot" draggable="false"><figcaption>Quizpop</figcaption></figure>
-            <figure class="card" style="--r:3deg;--x:6%;--y:300px"><img src="./assets/case-badina.png" alt="Badina screenshot" draggable="false"><figcaption>Badina</figcaption></figure>
-            <figure class="card" style="--r:-3deg;--x:49%;--y:330px"><img src="./assets/case-maiatar.png" alt="Maiatar screenshot" draggable="false"><figcaption>Maiatar.io</figcaption></figure>
+            <figure class="card" style="--r:-5deg;--x:0%;--y:0px"><img src="./assets/case-libertyprim.png" alt="Libertyprim screenshot" draggable="false"><figcaption>Libertyprim</figcaption></figure>
+            <figure class="card" style="--r:4deg;--x:34%;--y:24px"><img src="./assets/case-quizpop.png" alt="Quizpop screenshot" draggable="false"><figcaption>Quizpop</figcaption></figure>
+            <figure class="card phone" style="--r:5deg;--x:74%;--y:30px">
+                <div class="iphone"><img src="./assets/case-hoproutine.png" alt="HopRoutine app screenshot" draggable="false"><span class="island"></span></div>
+                <figcaption>HopRoutine</figcaption></figure>
+            <figure class="card" style="--r:3deg;--x:3%;--y:270px"><img src="./assets/case-badina.png" alt="Badina screenshot" draggable="false"><figcaption>Badina</figcaption></figure>
+            <figure class="card" style="--r:-3deg;--x:37%;--y:300px"><img src="./assets/case-maiatar.png" alt="Maiatar screenshot" draggable="false"><figcaption>Maiatar.io</figcaption></figure>
+            <figure class="card" style="--r:-2deg;--x:62%;--y:470px">
+                <div class="macbook"><div class="mac-screen"><img src="./assets/case-delaipour.png" alt="Delaipour.fr screenshot" draggable="false"></div><div class="mac-base"></div></div>
+                <figcaption>Delaipour.fr</figcaption></figure>
         </div>
     </section>
 

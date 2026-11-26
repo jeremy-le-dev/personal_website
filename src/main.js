@@ -21,7 +21,7 @@ const getAge = (birth) => {
     if (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate())) age--;
     return age;
 };
-document.getElementById('age').textContent = getAge(new Date(1994, 11, 8));
+document.getElementById('age').textContent = getAge(new Date(1994, 10, 8));
 document.getElementById('year').textContent = new Date().getFullYear();
 document.querySelector('#download-pdf').href = pdfURL;
 
@@ -156,3 +156,15 @@ const openLightbox = (img) => {
 };
 lightbox.addEventListener('click', () => { lightbox.hidden = true; });
 addEventListener('keydown', (e) => { if (e.key === 'Escape') lightbox.hidden = true; });
+
+/* ---------- Portrait: gentle 3D tilt that follows the cursor ---------- */
+const portrait = document.getElementById('portrait');
+if (portrait && !reduceMotion) {
+    addEventListener('pointermove', (e) => {
+        const r = portrait.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width / 2)) / innerWidth;
+        const dy = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+        portrait.style.setProperty('--tx', `${(dx * 14).toFixed(2)}deg`);
+        portrait.style.setProperty('--ty', `${(-dy * 14).toFixed(2)}deg`);
+    }, { passive: true });
+}
