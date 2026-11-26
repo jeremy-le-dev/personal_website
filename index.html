@@ -33,7 +33,13 @@
 </button>
 
 <!-- Scroll-drawn thread running down the page -->
-<svg class="thread print-hidden" id="thread" aria-hidden="true" preserveAspectRatio="none"><path id="thread-path"/></svg>
+<svg class="thread print-hidden" id="thread" aria-hidden="true" preserveAspectRatio="none">
+    <path id="thread-path"/>
+    <g id="thread-knot" class="knot"><g class="knot-inner">
+        <path d="M0 -2 C-9 4 -9 14 0 14 C9 14 9 4 0 -2 Z"/>
+        <path class="loop" d="M-2 10 C-14 12 -16 24 -6 26 C2 28 8 20 2 14"/>
+    </g></g>
+</svg>
 
 <main>
 

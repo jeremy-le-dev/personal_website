@@ -53,10 +53,13 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-/* ---------- A thread that draws itself as you scroll ---------- */
+/* ---------- A thread that draws itself as you scroll, with a knot at its tip ---------- */
 const thread = document.getElementById('thread');
 const threadPath = document.getElementById('thread-path');
+const knot = document.getElementById('thread-knot');
 let threadLen = 0;
+let samples = [];          // [{len, y}] with y kept monotonic so we can search it
+let shownLen = 0, targetLen = 0, raf = 0;
 
 const buildThread = () => {
     if (reduceMotion || innerWidth < 760) { thread.style.display = 'none'; return; }
@@ -66,22 +69,24 @@ const buildThread = () => {
     thread.setAttribute('viewBox', `0 0 ${w} ${docH}`);
     thread.style.height = `${docH}px`;
 
-    // Run down the margins beside each section, and only cross over in the empty gap between sections
+    // Starts at the very top, runs down the hero's left margin, then down the margins
+    // beside each section, crossing over only in the empty gap between sections.
+    const hero = document.querySelector('.hero');
     const sections = [...document.querySelectorAll('main > section:not(.hero), main > footer')];
     const gutter = Math.max(32, (w - 960) / 2 - 48);
-    const hero = document.querySelector('.hero').getBoundingClientRect();
-    let x = w / 2, y = hero.bottom + scrollY - 40;
-    let d = `M ${x} ${y}`;
+    const heroGutter = Math.max(28, (w - 1040) / 2 - 56);
+    const heroBottom = hero.getBoundingClientRect().bottom + scrollY;
+    let x = heroGutter, y = heroBottom - 60;
+    let d = `M ${heroGutter + 40} -4 C ${heroGutter + 40} 90, ${heroGutter - 14} 160, ${heroGutter} 260`;
+    d += ` C ${heroGutter + 16} ${heroBottom * 0.5}, ${heroGutter - 20} ${heroBottom * 0.7}, ${x} ${y}`;
     sections.forEach((s, i) => {
         const r = s.getBoundingClientRect();
         const top = r.top + scrollY, bottom = r.bottom + scrollY;
-        const side = i % 2 ? w - gutter : gutter;
+        const side = i % 2 ? gutter : w - gutter;
         const enter = top + 70;
-        // swoop across the padding gap into the margin
         d += ` C ${x} ${(y + enter) / 2 + 40}, ${side} ${enter - 60}, ${side} ${enter}`;
-        // wander down the margin with a gentle wiggle and a small loop
         const exit = i === sections.length - 1 ? bottom - 160 : bottom - 50;
-        const mid = (enter + exit) / 2, sway = i % 2 ? -18 : 18;
+        const mid = (enter + exit) / 2, sway = i % 2 ? 18 : -18;
         d += ` C ${side + sway} ${enter + 80}, ${side - sway} ${mid - 80}, ${side} ${mid}`;
         d += ` c ${sway * 1.4} 18, ${sway * 0.4} 46, ${-sway * 0.6} 30`;
         d += ` C ${side - sway} ${mid + 40}, ${side + sway} ${exit - 60}, ${side} ${exit}`;
@@ -90,23 +95,53 @@ const buildThread = () => {
     threadPath.setAttribute('d', d);
     threadLen = threadPath.getTotalLength();
     threadPath.style.strokeDasharray = threadLen;
-    drawThread();
+
+    samples = [];
+    let maxY = -Infinity;
+    const n = Math.ceil(threadLen / 8);
+    for (let k = 0; k <= n; k++) {
+        const len = (k / n) * threadLen;
+        maxY = Math.max(maxY, threadPath.getPointAtLength(len).y);
+        samples.push({ len, y: maxY });
+    }
+    updateTarget();
+    shownLen = targetLen;
+    render();
 };
 
-const drawThread = () => {
-    if (!threadLen) return;
-    const max = document.documentElement.scrollHeight - innerHeight;
-    const progress = Math.min(1, Math.max(0, scrollY / max));
-    threadPath.style.strokeDashoffset = threadLen * (1 - progress);
+// The tip follows a line a little below the middle of the screen
+const updateTarget = () => {
+    if (!samples.length) return;
+    const atBottom = scrollY + innerHeight >= document.documentElement.scrollHeight - 4;
+    if (atBottom) { targetLen = threadLen; return; }
+    const lineY = scrollY + innerHeight * 0.62;
+    let lo = 0, hi = samples.length - 1;
+    while (lo < hi) { const m = (lo + hi) >> 1; samples[m].y < lineY ? lo = m + 1 : hi = m; }
+    targetLen = samples[lo].len;
 };
 
-let ticking = false;
+const render = () => {
+    threadPath.style.strokeDashoffset = threadLen - shownLen;
+    const p = threadPath.getPointAtLength(Math.max(0, shownLen));
+    const q = threadPath.getPointAtLength(Math.max(0, shownLen - 6));
+    const angle = Math.atan2(p.y - q.y, p.x - q.x) * 180 / Math.PI;
+    knot.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${angle - 90})`);
+};
+
+// Ease the tip toward its target so it glides instead of jumping
+const tick = () => {
+    const diff = targetLen - shownLen;
+    shownLen += Math.abs(diff) < 0.5 ? diff : diff * 0.14;
+    render();
+    raf = Math.abs(targetLen - shownLen) > 0.5 ? requestAnimationFrame(tick) : 0;
+};
+
 addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => { drawThread(); ticking = false; });
+    updateTarget();
+    if (!raf) raf = requestAnimationFrame(tick);
 }, { passive: true });
-addEventListener('resize', buildThread);
+let resizeTimer;
+addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(buildThread, 120); });
 addEventListener('load', buildThread);
 document.fonts?.ready.then(buildThread);
 

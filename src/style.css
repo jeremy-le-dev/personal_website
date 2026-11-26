@@ -213,7 +213,11 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 
 /* ---------- Thread drawn on scroll ---------- */
 .thread { position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 0; overflow: visible; }
-.thread path { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; opacity: .55; }
+.thread #thread-path { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; opacity: .7; }
+.knot path { fill: var(--accent); stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+.knot path.loop { fill: none; stroke-linecap: round; }
+.knot-inner { animation: knot-wobble 1.6s ease-in-out infinite; transform-origin: 0 0; scale: 2; }
+@keyframes knot-wobble { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
 
 /* ---------- Theme toggle ---------- */
 .theme-toggle {
