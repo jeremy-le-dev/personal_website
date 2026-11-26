@@ -52,11 +52,11 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 /* ---------- Hero ---------- */
 .hero {
     min-height: 100vh;
-    max-width: 1040px;
-    display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center;
+    max-width: 720px;
+    display: flex; flex-direction: column; justify-content: center;
     padding-top: 80px;
 }
-.hero p { margin: 0 0 12px; max-width: 34ch; }
+.hero p { margin: 0 0 12px; max-width: 40ch; font-size: 20px; }
 .hero-doodle svg { width: 84px; margin-bottom: 8px; }
 .wave { display: inline-block; color: var(--accent); animation: dot 2.8s var(--ease) 1.2s infinite; }
 @keyframes dot { 0%, 70%, 100% { transform: none; } 80% { transform: translateY(-14px) scale(1.15); } 90% { transform: translateY(2px); } }
@@ -96,37 +96,6 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 .js .is-in .draw path, .js .draw.is-in path { animation: draw 1.4s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 180ms); }
 .js .is-in .draw path.fill { fill-opacity: 1; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
-
-/* ---------- Portrait (photo from the CV, head popping out of the pentagon) ---------- */
-.portrait {
-    position: relative; width: 100%; max-width: 420px; justify-self: end;
-    perspective: 900px;
-}
-.portrait-img {
-    position: relative; z-index: 1; display: block; width: 100%; height: auto;
-    transform: rotateY(var(--tx, 0deg)) rotateX(var(--ty, 0deg));
-    transition: transform .45s cubic-bezier(0.2, 0.8, 0.2, 1);
-    filter: drop-shadow(0 24px 30px rgba(37, 99, 235, .22));
-    animation: float 6s ease-in-out infinite;
-}
-.portrait-frame, .portrait-doodles { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.portrait-frame { transform: translate(14px, 14px) rotate(3deg); }
-.portrait-frame path { stroke: var(--accent); stroke-width: 2.5; }
-.portrait-doodles { z-index: 2; pointer-events: none; }
-.portrait-doodles .spark { animation: twinkle 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-.portrait-doodles .s2 { animation-delay: .8s; }
-.portrait-doodles .s3 { animation-delay: 1.6s; }
-.portrait-tag {
-    position: absolute; z-index: 3; right: -6px; top: 4%;
-    font: 700 18px/1 var(--display); color: var(--accent);
-    transform: rotate(8deg);
-    opacity: 0; transition: opacity .4s ease 1.6s, transform .5s var(--ease) 1.6s;
-}
-.portrait.is-in .portrait-tag { opacity: 1; transform: rotate(-6deg); }
-.js .portrait.reveal { transform: translateY(40px) scale(.96); }
-.js .portrait.reveal.is-in { transform: none; }
-@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
-@keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(.55) rotate(45deg); opacity: .6; } }
 
 /* ---------- Device frames for screenshots ---------- */
 .card.phone { width: min(19%, 190px); padding: 8px 8px 0; }
@@ -215,47 +184,42 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 .thread { position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 0; overflow: visible; }
 .thread #thread-path { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; opacity: .7; }
 .knot path { fill: var(--accent); stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
-.knot path.loop { fill: none; stroke-linecap: round; }
-.knot-inner { animation: knot-wobble 1.6s ease-in-out infinite; transform-origin: 0 0; scale: 2; }
+.knot path.loop { display: none; }
+.knot-inner { animation: knot-wobble 1.6s ease-in-out infinite; transform-origin: 0 0; scale: 1.3; }
 @keyframes knot-wobble { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
 
-/* ---------- My head riding the tip of the thread ---------- */
-.tip-head {
-    position: absolute; top: 0; left: 0; z-index: 5; pointer-events: none;
-    width: 0; height: 0;
+/* ---------- My portrait hanging from the tip of the thread ---------- */
+.tip-head { position: absolute; top: 0; left: 0; z-index: 5; pointer-events: none; width: 0; height: 0; }
+.tip-tilt { position: absolute; left: -60px; top: -10px; width: 120px; height: 124px; transform-origin: 60px 10px; }
+.tip-body { position: absolute; inset: 0; perspective: 400px; transform-origin: 50% 70%; }
+.tip-body img {
+    position: relative; z-index: 1; display: block; width: 100%; height: auto;
+    filter: drop-shadow(0 10px 14px rgba(37, 99, 235, .25));
 }
-.tip-tilt { position: absolute; left: -30px; top: -30px; width: 60px; height: 60px; transform: rotate(var(--lean, 0deg)); transition: transform .2s ease-out; }
-.tip-face {
-    width: 100%; height: 100%; border-radius: 50%;
-    border: 2.5px solid var(--accent); background: var(--paper);
-    box-shadow: 0 6px 16px rgba(37, 99, 235, .25);
-    animation: bob 2.4s ease-in-out infinite;
-}
-.tip-face img { display: block; width: 100%; height: 100%; border-radius: 50%; }
+.tip-frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transform: translate(7px, 7px) rotate(3deg); }
+.tip-frame path { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linejoin: round; }
+.tip-twinkle { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 2; }
+.tip-twinkle path { fill: var(--accent); transform-box: fill-box; transform-origin: center; animation: twinkle 2.6s ease-in-out infinite; }
+.tip-twinkle .s2 { animation-delay: 1.1s; }
+@keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(.5) rotate(45deg); opacity: .5; } }
+.tip-fx { position: absolute; left: -40px; top: -38px; width: 200px; height: 200px; overflow: visible; z-index: 3; }
+.tip-fx .shock path { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 30; stroke-dashoffset: 30; opacity: 0; }
+.tip-fx .stars path { fill: var(--accent); opacity: 0; transform-box: fill-box; transform-origin: center; }
+.tip-prop { position: absolute; left: 50%; top: -6px; z-index: 3; font-size: 34px; line-height: 1; opacity: 0; transform: translate(-50%, 0); }
 .tip-bubble {
-    position: absolute; left: 34px; top: -64px; white-space: nowrap;
-    padding: 6px 12px; border-radius: 16px 16px 16px 4px;
-    background: var(--ink); color: var(--paper);
-    font: 700 15px/1.2 var(--display);
-    opacity: 0; transform: translateY(8px) scale(.6); transform-origin: 0 100%;
-    transition: opacity .2s ease, transform .35s cubic-bezier(.3, 1.6, .5, 1);
+    /* sits above the portrait and opens toward the page edge, so it never covers the content */
+    position: absolute; right: -24px; bottom: 6px; z-index: 4; white-space: nowrap;
+    padding: 8px 14px; border: 2px solid var(--ink); border-radius: 18px 18px 4px 18px;
+    background: var(--paper); color: var(--ink);
+    font: 700 16px/1.2 var(--display);
+    box-shadow: -3px 3px 0 var(--accent);
+    opacity: 0; transform-origin: 100% 100%;
 }
-.tip-head.flip .tip-bubble { left: auto; right: 34px; border-radius: 16px 16px 4px 16px; transform-origin: 100% 100%; }
-.tip-head.talking .tip-bubble { opacity: 1; transform: none; }
-@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
+.tip-head.flip .tip-bubble { right: auto; left: -24px; border-radius: 18px 18px 18px 4px; transform-origin: 0 100%; box-shadow: 3px 3px 0 var(--accent); }
 
-.r-spin .tip-face { animation: r-spin .8s cubic-bezier(.3, 1.4, .5, 1); }
-.r-peek .tip-face { animation: r-peek 1s ease-in-out; }
-.r-surprised .tip-face { animation: r-surprised .7s cubic-bezier(.3, 1.6, .5, 1); }
-.r-nod .tip-face { animation: r-nod .9s ease-in-out; }
-.r-shake .tip-face { animation: r-shake .6s ease-in-out; }
-.r-wave .tip-face { animation: r-wave 1.2s ease-in-out; transform-origin: 50% 90%; }
-@keyframes r-spin { from { transform: rotate(-360deg) scale(.7); } to { transform: none; } }
-@keyframes r-peek { 0%, 100% { transform: none; } 30% { transform: translateX(-8px) rotate(-14deg); } 65% { transform: translateX(8px) rotate(14deg); } }
-@keyframes r-surprised { 0% { transform: none; } 35% { transform: translateY(-22px) scale(1.4); } 60% { transform: translateY(0) scale(.92, 1.08); } 100% { transform: none; } }
-@keyframes r-nod { 0%, 100% { transform: none; } 25%, 75% { transform: translateY(5px) rotateX(25deg); } 50% { transform: none; } }
-@keyframes r-shake { 0%, 100% { transform: none; } 20%, 60% { transform: translateX(-6px) rotate(-6deg); } 40%, 80% { transform: translateX(6px) rotate(6deg); } }
-@keyframes r-wave { 0%, 100% { transform: none; } 20%, 60% { transform: rotate(-18deg); } 40%, 80% { transform: rotate(14deg); } }
+/* Phones and reduced motion: no thread, the portrait sits in the corner and still reacts */
+.tip-head.docked { position: fixed; top: auto; left: auto; right: 84px; bottom: 120px; transform: scale(.5) !important; }
+.tip-head.docked .tip-bubble { font-size: 24px; }
 
 /* ---------- Theme toggle ---------- */
 .theme-toggle {
@@ -290,15 +254,11 @@ body.print .print-show { display: block; }
 @media (max-width: 760px) {
     section, footer { padding: 80px 20px; }
     .feature { grid-template-columns: 1fr; }
-    .hero { grid-template-columns: 1fr; gap: 24px; padding-top: 72px; }
-    .portrait { order: -1; max-width: 240px; justify-self: start; }
-    .hero-doodle { display: none; }
     .card.phone { width: 70%; justify-self: center; }
     .rows a, .rows li > div { grid-template-columns: 1fr auto; gap: 4px 16px; }
     .row-desc { grid-column: 1; grid-row: 2; }
     .row-arr, .row-date { grid-row: 1; grid-column: 2; }
     .board { height: auto; display: grid; gap: 24px; }
-    .portrait-tag { right: -30px; }
     .card { position: relative; left: 0; top: 0; width: 100%; }
 }
 
