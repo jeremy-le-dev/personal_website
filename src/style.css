@@ -219,6 +219,44 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 .knot-inner { animation: knot-wobble 1.6s ease-in-out infinite; transform-origin: 0 0; scale: 2; }
 @keyframes knot-wobble { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
 
+/* ---------- My head riding the tip of the thread ---------- */
+.tip-head {
+    position: absolute; top: 0; left: 0; z-index: 5; pointer-events: none;
+    width: 0; height: 0;
+}
+.tip-tilt { position: absolute; left: -30px; top: -30px; width: 60px; height: 60px; transform: rotate(var(--lean, 0deg)); transition: transform .2s ease-out; }
+.tip-face {
+    width: 100%; height: 100%; border-radius: 50%;
+    border: 2.5px solid var(--accent); background: var(--paper);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, .25);
+    animation: bob 2.4s ease-in-out infinite;
+}
+.tip-face img { display: block; width: 100%; height: 100%; border-radius: 50%; }
+.tip-bubble {
+    position: absolute; left: 34px; top: -64px; white-space: nowrap;
+    padding: 6px 12px; border-radius: 16px 16px 16px 4px;
+    background: var(--ink); color: var(--paper);
+    font: 700 15px/1.2 var(--display);
+    opacity: 0; transform: translateY(8px) scale(.6); transform-origin: 0 100%;
+    transition: opacity .2s ease, transform .35s cubic-bezier(.3, 1.6, .5, 1);
+}
+.tip-head.flip .tip-bubble { left: auto; right: 34px; border-radius: 16px 16px 4px 16px; transform-origin: 100% 100%; }
+.tip-head.talking .tip-bubble { opacity: 1; transform: none; }
+@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
+
+.r-spin .tip-face { animation: r-spin .8s cubic-bezier(.3, 1.4, .5, 1); }
+.r-peek .tip-face { animation: r-peek 1s ease-in-out; }
+.r-surprised .tip-face { animation: r-surprised .7s cubic-bezier(.3, 1.6, .5, 1); }
+.r-nod .tip-face { animation: r-nod .9s ease-in-out; }
+.r-shake .tip-face { animation: r-shake .6s ease-in-out; }
+.r-wave .tip-face { animation: r-wave 1.2s ease-in-out; transform-origin: 50% 90%; }
+@keyframes r-spin { from { transform: rotate(-360deg) scale(.7); } to { transform: none; } }
+@keyframes r-peek { 0%, 100% { transform: none; } 30% { transform: translateX(-8px) rotate(-14deg); } 65% { transform: translateX(8px) rotate(14deg); } }
+@keyframes r-surprised { 0% { transform: none; } 35% { transform: translateY(-22px) scale(1.4); } 60% { transform: translateY(0) scale(.92, 1.08); } 100% { transform: none; } }
+@keyframes r-nod { 0%, 100% { transform: none; } 25%, 75% { transform: translateY(5px) rotateX(25deg); } 50% { transform: none; } }
+@keyframes r-shake { 0%, 100% { transform: none; } 20%, 60% { transform: translateX(-6px) rotate(-6deg); } 40%, 80% { transform: translateX(6px) rotate(6deg); } }
+@keyframes r-wave { 0%, 100% { transform: none; } 20%, 60% { transform: rotate(-18deg); } 40%, 80% { transform: rotate(14deg); } }
+
 /* ---------- Theme toggle ---------- */
 .theme-toggle {
     position: fixed; top: 20px; right: 20px; z-index: 20;

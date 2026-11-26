@@ -57,13 +57,17 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 const thread = document.getElementById('thread');
 const threadPath = document.getElementById('thread-path');
 const knot = document.getElementById('thread-knot');
+const head = document.getElementById('tip-head');
+const bubble = document.getElementById('tip-bubble');
+let reactZones = [];      // [{y, react, say}] sorted by y
+let currentZone = -1, bubbleTimer;
 let threadLen = 0;
 let samples = [];          // [{len, y}] with y kept monotonic so we can search it
 let shownLen = 0, targetLen = 0, raf = 0;
 
 const buildThread = () => {
-    if (reduceMotion || innerWidth < 760) { thread.style.display = 'none'; return; }
-    thread.style.display = '';
+    if (reduceMotion || innerWidth < 760) { thread.style.display = 'none'; head.style.display = 'none'; return; }
+    thread.style.display = ''; head.style.display = '';
     const docH = document.documentElement.scrollHeight;
     const w = innerWidth;
     thread.setAttribute('viewBox', `0 0 ${w} ${docH}`);
@@ -93,6 +97,10 @@ const buildThread = () => {
         x = side; y = exit;
     });
     threadPath.setAttribute('d', d);
+    reactZones = sections.map((s) => ({
+        y: s.getBoundingClientRect().top + scrollY + 70,
+        react: s.dataset.react, say: s.dataset.say,
+    }));
     threadLen = threadPath.getTotalLength();
     threadPath.style.strokeDasharray = threadLen;
 
@@ -106,6 +114,7 @@ const buildThread = () => {
     }
     updateTarget();
     shownLen = targetLen;
+    currentZone = -2;     // re-evaluate zones silently after a rebuild
     render();
 };
 
@@ -126,6 +135,35 @@ const render = () => {
     const q = threadPath.getPointAtLength(Math.max(0, shownLen - 6));
     const angle = Math.atan2(p.y - q.y, p.x - q.x) * 180 / Math.PI;
     knot.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${angle - 90})`);
+
+    // The head hangs just past the knot, leaning with the speed of the scroll
+    const rad = angle * Math.PI / 180;
+    const hx = p.x + Math.cos(rad) * 40, hy = p.y + Math.sin(rad) * 40;
+    head.style.transform = `translate(${hx}px, ${hy}px)`;
+    const lean = Math.max(-25, Math.min(25, (targetLen - shownLen) * 0.08));
+    head.style.setProperty('--lean', `${lean}deg`);
+    head.classList.toggle('flip', hx > innerWidth / 2);
+
+    // React when the head reaches a new section
+    let zone = -1;
+    for (let k = 0; k < reactZones.length; k++) if (hy >= reactZones[k].y) zone = k;
+    if (zone !== currentZone) {
+        const goingDown = zone > currentZone;
+        currentZone = zone;
+        if (zone >= 0 && goingDown) react(reactZones[zone]);
+    }
+};
+
+const react = ({ react, say }) => {
+    head.classList.remove('r-spin', 'r-peek', 'r-surprised', 'r-nod', 'r-shake', 'r-wave');
+    void head.offsetWidth; // restart the animation
+    if (react) head.classList.add(`r-${react}`);
+    if (say) {
+        bubble.textContent = say;
+        head.classList.add('talking');
+        clearTimeout(bubbleTimer);
+        bubbleTimer = setTimeout(() => head.classList.remove('talking'), 1800);
+    }
 };
 
 // Ease the tip toward its target so it glides instead of jumping
