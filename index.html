@@ -1,525 +1,183 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Jérémy Froment Personal Website - learn more about my skills and projects here.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jérémy Froment · Front-end engineer</title>
+    <meta name="description" content="Jérémy Froment, front-end engineer at Dailymotion. UI/UX lover, based in Cannes, France.">
     <link rel="icon" type="image/png" href="./assets/photo-jeremy-froment.png"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./node_modules/tailwindcss/dist/tailwind.min.css">
-    <link rel="stylesheet" href="./node_modules/tailwindcss/dist/tailwind-dark.min.css">
-    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="./node_modules/aos/dist/aos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css">
+    <script>
+        // Apply the theme before first paint to avoid a flash
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5FG04QB4GB"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-5FG04QB4GB');
     </script>
-    <style>
-        .text-5xl,
-        .text-3xl,
-        .text-2xl,
-        .text-1xl,
-        .text-xl {
-            font-family: Gabarito, sans-serif !important;
-            font-weight: lighter;
-            letter-spacing: -1px;
-        }
-    </style>
 </head>
-<body class="bg-white text-gray-900 font-sans antialiased dark:bg-gray-900 dark:text-gray-200">
+<body>
 
-<!-- Theme -->
-<div class="print-hidden fixed top-0 right-0 bg-gray-100 rounded-bl-full block w-16 h-16 text-right p-2 dark:bg-gray-800 cursor-pointer hover:text-blue-600 dark:hover:text-blue-300"
-     id="btn-change-theme">
-    <i class="fas fa-moon fa-2x"></i>
-</div>
+<button class="theme-toggle print-hidden" id="btn-change-theme" aria-label="Toggle dark mode">
+    <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg>
+    <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11z"/></svg>
+</button>
 
-<!-- Container principal -->
-<div class="container-fluid md:container mx-auto px-5 md:px-32">
+<!-- Scroll-drawn thread running down the page -->
+<svg class="thread print-hidden" id="thread" aria-hidden="true" preserveAspectRatio="none"><path id="thread-path"/></svg>
 
-    <!-- Titre et réseaux sociaux -->
-    <section class="flex flex-wrap py-14 relative">
-        <div class="flex-auto">
-            <h1 data-aos="fade-down" class="font-extrabold text-5xl">Jérémy Froment</h1>
-            <h2 class="text-lg font-medium pt-2">Learn more about my skills and projects here.</h2>
+<main>
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+        <div class="hero-doodle reveal" aria-hidden="true">
+            <svg viewBox="0 0 120 80" class="draw">
+                <path d="M38 14 C24 26 14 34 10 40 C16 47 26 55 38 66"/>
+                <path d="M82 14 C96 26 106 34 110 40 C104 47 94 55 82 66"/>
+                <path d="M68 8 C62 30 58 50 52 72"/>
+            </svg>
         </div>
-        <div class="absolute top-10 right-10 print-show">
-            <img src="./assets/qrcode.png" alt="QR Code" width="200">
+        <h1 class="lead reveal">Hi, I'm Jérémy<span class="wave" aria-hidden="true">.</span></h1>
+        <p class="reveal">I'm a front-end engineer living in Cannes, France. I'm a bit of a perfectionist and I love things well done, especially beautiful things.</p>
+        <p class="reveal">By day I build interfaces at <a href="https://www.dailymotion.com" target="_blank" rel="noopener">Dailymotion</a>, where I lead UI/UX on Ray, our agentic AI product.</p>
+        <ul class="meta reveal">
+            <li><span id="age">31</span> years old</li>
+            <li><a href="mailto:jeremyfroment@yahoo.fr">jeremyfroment@yahoo.fr</a></li>
+        </ul>
+        <div class="btns reveal">
+            <a class="btn" id="download-pdf" download target="_blank">Resume <span class="arr">↓</span></a>
+            <a class="btn" href="https://www.linkedin.com/in/jeremyfroment/" target="_blank" rel="noopener">LinkedIn <span class="arr">↗</span></a>
+            <a class="btn" href="https://github.com/jeremy-le-dev" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a>
         </div>
-        <div class="shrink-0 flex space-x-4 justify-end print-hidden mt-3 md:mt-0 lg:mt-0">
-            <a data-aos="fade-down" data-aos-delay="400" target="_blank" id="download-pdf"
-               download class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
-                <i class="fas fa-download fa-4x p-2"></i>
-            </a>
-            <a data-aos="fade-down" data-aos-delay="100" target="_blank"
-               href="https://www.linkedin.com/in/jeremyfroment/"
-               class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
-                <i class="fab fa-linkedin fa-4x"></i>
-            </a>
-            <a data-aos="fade-down" data-aos-delay="200" target="_blank" href="https://github.com/jeremy-le-dev"
-               class="pt-2 hover:text-blue-600 dark:hover:text-blue-300">
-                <i class="fab fa-github-square fa-4x"></i>
-            </a>
-        </div>
+        <img class="print-show qrcode" src="./assets/qrcode.png" alt="QR Code" width="140">
     </section>
 
-    <!-- Moi -->
-    <section class="py-5 md:py-14 my-5">
-        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">It's Me.</div>
-        <div class="flex flex-wrap items-center mt-5 font-semibold">
-            <div class="flex-none h-full w-full md:w-1/5">
-                <img data-aos="fade-left" class="rounded-lg w-full h-full" src="./assets/photo-jeremy-froment.png" alt="Photo Jérémy Froment">
-            </div>
-            <div class="flex-auto w-full md:w-3/5 ml-3 md:ml-8 mt-6 md:mt-0 xl:mt-0">
-                <span class="text-2xl" style="font-size: 30px;">Hi. I'm Jérémy, nice to meet you.</span>
-                <br>
-                <div class="w-full md:w-auto lg:w-auto inline-block lg:mr-4 text-sm">
-                    <i class="fas fa-map-pin"></i>&nbsp;&nbsp;<span class="font-normal">Cannes, France</span>
-                </div>
-                <div class="w-full md:w-auto lg:w-auto inline-block lg:mr-4 text-sm">
-                    <i class="fas fa-child"></i>&nbsp;&nbsp;<span class="font-normal"><span id="age"></span>&nbsp;years</span>
-                </div>
-                <div class="w-full md:w-auto lg:w-auto inline-block text-sm">
-                    <i class="fas fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:jeremyfroment@yahoo.fr" class="font-normal hover:text-blue-600 dark:hover:text-blue-300">jeremyfroment@yahoo.fr</a>
-                </div>
-                <br>
-                <br>
-                <span class="text-justify text-normal font-light" style="font-size: 23px;">I am a French developer who would like you to know more about him. I'm passionate about computer science with a tendency to be a perfectionist and I love things well done (especially beautiful things). I also like sports in general. Welcome !</span>
-            </div>
+    <!-- Featured -->
+    <section class="feature" data-thread-anchor>
+        <div class="feature-art reveal" aria-hidden="true">
+            <svg viewBox="0 0 320 240" class="draw">
+                <!-- a little hand-drawn browser window with a chat bubble -->
+                <path d="M22 34 C20 28 26 22 34 22 L284 20 C294 20 300 26 300 34 L302 200 C302 210 296 216 286 216 L36 218 C26 218 20 212 20 202 Z"/>
+                <path d="M21 52 C110 50 200 54 301 51"/>
+                <path d="M36 37 a4 4 0 1 0 0.1 0"/>
+                <path d="M52 37 a4 4 0 1 0 0.1 0"/>
+                <path d="M68 37 a4 4 0 1 0 0.1 0"/>
+                <path class="fill" d="M48 80 C46 72 52 68 60 68 L176 67 C184 67 188 72 188 80 L188 106 C188 114 184 118 176 118 L78 119 L62 134 L64 119 L60 119 C52 119 48 114 48 106 Z"/>
+                <path d="M132 146 C130 140 134 136 142 136 L262 136 C270 136 274 140 274 148 L274 176 C274 184 270 188 262 188 L250 188 L252 202 L236 188 L142 188 C134 188 130 184 130 176 Z"/>
+                <path d="M150 156 C180 155 220 157 254 155"/>
+                <path d="M150 170 C176 169 196 171 222 170"/>
+                <path class="spark" d="M236 74 L240 88 L254 92 L240 96 L236 110 L232 96 L218 92 L232 88 Z"/>
+            </svg>
         </div>
-    </section>
-
-    <!-- Aperçu rapide -->
-    <section class="py-14">
-        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Quick Overview.</div>
-        <div class="flex flex-wrap py-5 px-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
-            <div class="flex-1 p-2">
-                <div data-aos="flip-left" data-aos-delay="100"
-                     class="rounded-lg h-full text-center p-5">
-                    <i class="fas fa-laptop-code fa-5x"></i>
-                    <div class="pt-5">Full-Stack Web Developer</div>
-                </div>
-            </div>
-            <div class="flex-1 p-2">
-                <div data-aos="flip-down" data-aos-delay="200"
-                     class="rounded-lg h-full text-center p-5">
-                    <i class="far fa-gem fa-5x"></i>
-                    <div class="pt-5">UI/UX Design Lover</div>
-                </div>
-            </div>
-            <div class="flex-1 p-2">
-                <div data-aos="flip-up" data-aos-delay="300"
-                     class="rounded-lg h-full text-center p-5">
-                    <i class="fas fa-map-signs fa-5x"></i>
-                    <div class="pt-5">Agile Reference</div>
-                </div>
-            </div>
-            <div class="flex-1 p-2">
-                <div data-aos="flip-right" data-aos-delay="400"
-                     class="rounded-lg h-full text-center p-5">
-                    <i class="fas fa-people-arrows fa-5x"></i>
-                    <div class="pt-5">Team Management</div>
-                </div>
+        <div class="feature-copy">
+            <h2 class="section-title reveal">I help make video feel like a conversation</h2>
+            <p class="reveal">Since 2023 I've been a key player in the transformation of Ray at Dailymotion, an agentic AI experience that won at the European Video Awards 2026. I own the UI/UX and ship the front-end.</p>
+            <div class="btns reveal">
+                <a class="btn" href="#work">My path <span class="arr">→</span></a>
             </div>
         </div>
     </section>
 
-    <!-- Compétences -->
-    <section class="py-8 md:py-14">
-        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Developer Skills.</div>
-        <div class="rounded-lg p-5 pl-0 mt-5 font-semibold">
-            <div class="py-3 flex flex-wrap items-stretch">
-                <div class="flex-none w-40 leading-10 self-start">JAVASCRIPT</div>
-                <div class="flex-auto self-start">
-                    <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-                        <div data-aos="zoom-in-right" class="rounded bg-gray-900 dark:bg-gray-100 h-full"
-                             style="width: 95%"></div>
-                    </div>
-                    <div class="w-full text-xs font-thin pt-1">
-                        VanillaJS, AngularJS, VueJS, React, React Native, Next.js, jQuery, Phaser, NodeJS, Svelte,
-                        TypeScript, WebPack, Ionic
-                    </div>
-                </div>
-                <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">95%
-                </div>
-            </div>
-            <div class="py-3 flex flex-wrap items-stretch">
-                <div class="flex-none w-40 leading-10 self-start">HTML / CSS</div>
-                <div class="flex-auto self-start">
-                    <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-                        <div data-aos="zoom-in-right" class="rounded bg-gray-900 dark:bg-gray-100 h-full"
-                             style="width: 95%"></div>
-                    </div>
-                    <div class="w-full text-xs font-thin pt-1">
-                        Bootstrap, TailwindCSS, IonicFramework, Smarty, Handlebars
-                    </div>
-                </div>
-                <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">95%
-                </div>
-            </div>
-            <div class="py-3 flex flex-wrap items-stretch">
-                <div class="flex-none w-40 leading-10 self-start">PHP</div>
-                <div class="flex-auto self-start">
-                    <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-                        <div data-aos="zoom-in-right" class="rounded bg-gray-900 dark:bg-gray-100 h-full"
-                             style="width: 80%"></div>
-                    </div>
-                    <div class="w-full text-xs font-thin pt-1">
-                        Slim Framework, Laravel, Phalcon
-                    </div>
-                </div>
-                <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">80%
-                </div>
-            </div>
-            <div class="py-3 flex flex-wrap items-stretch">
-                <div class="flex-none w-40 leading-10 self-start">BDD</div>
-                <div class="flex-auto self-start">
-                    <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-                        <div data-aos="zoom-in-right" class="rounded bg-gray-900 dark:bg-gray-100 h-full"
-                             style="width: 75%"></div>
-                    </div>
-                    <div class="w-full text-xs font-thin pt-1">
-                        MySQL, MariaDB, ElasticSearch, Firebase, MongoDB
-                    </div>
-                </div>
-                <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">75%
-                </div>
-            </div>
-            <div class="py-3 flex flex-wrap items-stretch">
-                <div class="flex-none w-40 leading-10 self-start">DEPLOY</div>
-                <div class="flex-auto self-start">
-                    <div class="rounded-lg h-10 border-2 p-1 border-gray-900 dark:border-gray-100">
-                        <div data-aos="zoom-in-right" class="rounded bg-gray-900 dark:bg-gray-100 h-full"
-                             style="width: 75%"></div>
-                    </div>
-                    <div class="w-full text-xs font-thin pt-1">
-                        Docker, Vercel, Heroku, GitLab, GitHub, OVH, CI/CD
-                    </div>
-                </div>
-                <div data-aos="zoom-in" class="flex-none hidden md:block w-10 leading-10 self-start pl-3 text-xl">75%
-                </div>
-            </div>
+    <!-- Projects as a list -->
+    <section class="projects" id="projects">
+        <h2 class="section-title center reveal">Some things I built</h2>
+        <ul class="rows reveal">
+            <li><a href="https://www.libertyprim.com/fr/" target="_blank" rel="noopener">
+                <span class="row-title">Libertyprim</span>
+                <span class="row-desc">A marketplace connecting fruit and vegetable professionals.</span>
+                <span class="row-arr">↗</span></a></li>
+            <li><a href="https://maiatar.jeremyfroment.fr/" target="_blank" rel="noopener">
+                <span class="row-title">Maiatar.io</span>
+                <span class="row-desc">An avatar creator for the Elrond crypto community.</span>
+                <span class="row-arr">↗</span></a></li>
+            <li><a href="https://www.badina-incendie.fr/" target="_blank" rel="noopener">
+                <span class="row-title">Badina</span>
+                <span class="row-desc">A professional website for a fire safety installer.</span>
+                <span class="row-arr">↗</span></a></li>
+            <li><a href="#gallery">
+                <span class="row-title">Quizpop</span>
+                <span class="row-desc">Online quiz battles built on school curriculum content.</span>
+                <span class="row-arr">↓</span></a></li>
+        </ul>
+        <p class="note center reveal">And plenty more on <a href="https://github.com/jeremy-le-dev" target="_blank" rel="noopener">GitHub →</a></p>
+    </section>
+
+    <!-- Draggable screenshots -->
+    <section class="gallery" id="gallery">
+        <h2 class="section-title center reveal">From my screenshots folder</h2>
+        <p class="note center reveal print-hidden">Toss them around, or click one to zoom in.</p>
+        <div class="board" id="board">
+            <figure class="card" style="--r:-5deg;--x:2%;--y:0px"><img src="./assets/case-libertyprim.png" alt="Libertyprim screenshot" draggable="false"><figcaption>Libertyprim</figcaption></figure>
+            <figure class="card" style="--r:4deg;--x:52%;--y:30px"><img src="./assets/case-quizpop.png" alt="Quizpop screenshot" draggable="false"><figcaption>Quizpop</figcaption></figure>
+            <figure class="card" style="--r:3deg;--x:6%;--y:300px"><img src="./assets/case-badina.png" alt="Badina screenshot" draggable="false"><figcaption>Badina</figcaption></figure>
+            <figure class="card" style="--r:-3deg;--x:49%;--y:330px"><img src="./assets/case-maiatar.png" alt="Maiatar screenshot" draggable="false"><figcaption>Maiatar.io</figcaption></figure>
         </div>
     </section>
 
-    <!-- Projects -->
-    <section class="py-14">
-        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Projects.</div>
-        <div class="rounded-lg p-5 pl-0 mt-5">
-            <div class="flex flex-wrap py-5">
-                <div data-aos="flip-left" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <img src="./assets/case-libertyprim.png" alt="Libertyprim Project">
-                        <a href="https://www.libertyprim.com/fr/" target="_blank"
-                           class="text-xl pt-5 pb-2 block font-bold">Libertyprim</a>
-                        <div>Website to connect fruit and vegetable professionals.</div>
-                        <div class="text-1xl pt-5 pb-2 font-bold">Key points about this project</div>
-                        <div>
-                            UI/UX Design adapted to professionals
-                            <br>
-                            Custom website design
-                            <br>
-                            Complete design of the complex server architecture
-                            <br>
-                            A variety of services
-                            <br>
-                            PHP, Smarty, Bootstrap, jQuery, Docker, Nginx, HAProxy, Varnish, Elasticsearch
-                        </div>
-                    </div>
-                </div>
-                <div data-aos="flip-left" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <img src="./assets/case-quizpop.png" alt="QuizPOP Project">
-                        <div class="text-xl pt-5 pb-2 font-bold">Quizpop</div>
-                        <div>Web application for online battle of curriculum quizzes.</div>
-                        <div class="text-1xl pt-5 pb-2 font-bold">Key points about this project</div>
-                        <div>
-                            Child-friendly UI/UX design
-                            <br>
-                            Custom website design
-                            <br>
-                            Built around existing educational resources
-                            <br>
-                            Educational game
-                            <br>
-                            AngularJS, Bootstrap
-                        </div>
-                    </div>
-                </div>
-                <div data-aos="flip-left" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <img src="./assets/case-badina.png" alt="Badina Sécurité Incendie I Project">
-                        <a href="https://www.badina-incendie.fr" target="_blank"
-                           class="text-xl pt-5 pb-2 block font-bold">Badina Sécurité Incendie</a>
-                        <div>Professional website for fire systems installation.</div>
-                        <div class="text-1xl pt-5 pb-2 font-bold">Key points about this project</div>
-                        <div>
-                            UI/UX Design adapted to professional
-                            <br>
-                            Custom website design
-                            <br>
-                            Wordpress, Divi
-                        </div>
-                    </div>
-                </div>
-                <div data-aos="flip-left" data-aos-delay="400" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <img src="./assets/case-maiatar.png" alt="Maiatar Project">
-                        <a href="https://maiatar.jeremyfroment.fr/" target="_blank"
-                           class="text-xl pt-5 pb-2 block font-bold">Maiatar.io</a>
-                        <div>Avatar creation site for the Elrond crypto community.</div>
-                        <div class="text-1xl pt-5 pb-2 font-bold">Key points about this project</div>
-                        <div>
-                            UI/UX Design adapted to Elrond community
-                            <br>
-                            Custom website design
-                            <br>
-                            Blockchain
-                            <br>
-                            VueJs, Tailwind CSS
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Experience -->
+    <section class="work" id="work">
+        <h2 class="section-title center reveal">Where I've worked</h2>
+        <ul class="rows static reveal">
+            <li><div>
+                <span class="row-title">Dailymotion</span>
+                <span class="row-desc">Front-end engineer. React, TypeScript, design systems, Cypress and Jest. Lead UI/UX on Ray.</span>
+                <span class="row-date">2023 – now</span></div></li>
+            <li><div>
+                <span class="row-title">Educlever</span>
+                <span class="row-desc">Full-stack engineer. Vue, Angular, Phaser, PHP, Elasticsearch. Mentored a team of interns.</span>
+                <span class="row-date">2014 – 2022</span></div></li>
+            <li><div>
+                <span class="row-title">C&amp;C MPS</span>
+                <span class="row-desc">C# intern. Responsive forms for a perfumery management app.</span>
+                <span class="row-date">2013</span></div></li>
+        </ul>
     </section>
 
-    <!-- Formations -->
-    <section class="py-14">
-        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Formations.</div>
-        <div class="rounded-lg p-5 pl-0 mt-5">
-            <div class="flex flex-wrap py-5">
-                <div data-aos="flip-left" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <img style="height: 75px; margin: auto;" src="./assets/polytech.png" alt="Polytech Nice Sophia">
-                        <div class="text-xl pt-5 block font-bold">Master 2</div>
-                        <div class="font-bold pb-2">IFI WEB</div>
-                        <div>Polytech Nice Sophia</div>
-                        <div>2016-2018</div>
-                    </div>
-                </div>
-                <div data-aos="flip-left" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <img style="height: 75px; margin: auto;" src="./assets/unice.png" alt="Polytech Nice Sophia">
-                        <div class="text-xl pt-5 block font-bold">Licence Professionnelle</div>
-                        <div class="font-bold pb-2">SIL IDSE</div>
-                        <div>Université Nice Sophia Antipolis</div>
-                        <div>2015-2016</div>
-                    </div>
-                </div>
-                <div data-aos="flip-left" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <img style="height: 75px; margin: auto;" src="./assets/ufip.svg" alt="Polytech Nice Sophia">
-                        <div class="text-xl pt-5 block font-bold">BTS</div>
-                        <div class="font-bold pb-2">SIO</div>
-                        <div>UFIP Business School</div>
-                        <div>2013-2015</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Toolbox -->
+    <section class="toolbox">
+        <h2 class="section-title center reveal">My toolbox</h2>
+        <ul class="tags reveal">
+            <li>React</li><li>TypeScript</li><li>Next.js</li><li>Vue</li><li>Svelte</li><li>Node.js</li>
+            <li>Tailwind CSS</li><li>Ant Design</li><li>Cypress</li><li>Jest</li><li>PHP · Laravel</li>
+            <li>Elasticsearch</li><li>MongoDB</li><li>Docker</li><li>Vercel</li><li>CI/CD</li><li>Figma</li><li>Agile · Scrum</li>
+        </ul>
     </section>
 
-    <!-- Experiences -->
-    <section class="py-14">
-        <div class="font-bold text-2xl" data-aos="fade" data-aos-delay="50">Experiences.</div>
-        <div class="rounded-lg p-5 pl-0 mt-5">
-            <div class="flex flex-wrap py-5">
-                <div data-aos="flip-left" data-aos-delay="100" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <div style="height: 75px;">
-                            <img style="max-width: 100%; max-height: 100%; margin: auto;" src="./assets/dailymotion.svg"
-                                 alt="Dailymotion">
-                        </div>
-                        <div class="text-xl pt-5 block font-bold">Front End Engineer</div>
-                        <div class="text-sm pb-4">Dailymotion · 2023-now</div>
-                        <div>
-                            <b>Front-End:</b> JavaScript, React, AntD
-                            <br>
-                            <b>Methodologies:</b> Agile, SCRUM, Jira, Miro, Pull Request, Reviews, Planning Poker,
-                            Retrospective, Sprints
-                            <br>
-                            <b>Tests:</b> Cypress, Jest
-                            <br>
-                            <b>Others:</b> Bash, GitHub
-                        </div>
-                    </div>
-                </div>
-                <div data-aos="flip-left" data-aos-delay="200" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <div style="height: 75px;">
-                            <img style="max-width: 100%; max-height: 100%; margin: auto;" src="./assets/educlever.png"
-                                 alt="Educlever">
-                        </div>
-                        <div class="text-xl pt-5 block font-bold">Full Stack Engineer</div>
-                        <div class="text-sm pb-4">Educlever · 2014-now</div>
-                        <div>
-                            <b>Front-End:</b> JavaScript, VueJS, AngularJS, PhaserJS, VanillaJS, HTML5, CSS3, Sass,
-                            Bootstrap, TailwindCSS
-                            <br>
-                            <b>Back-End:</b> PHP, Laravel, Phalcon, ElasticSearch, NodeJS, SQL
-                            <br>
-                            <b>Methodologies:</b> Agile, SCRUM, YouTrack, Roadmunk, Reviews, Planning Poker,
-                            Retrospective, Sprints
-                            <br>
-                            <b>Others:</b> Bash, UpSource, GitLab
-                            <br>
-                            <b>Management:</b> Managing a team of interns
-                        </div>
-                    </div>
-                </div>
-                <div data-aos="flip-left" data-aos-delay="300" class="w-full md:w-auto md:flex-1 p-2">
-                    <div class="rounded-lg h-full text-center p-5">
-                        <div style="height: 75px;">
-                            <img style="max-width: 100%; max-height: 100%; margin: auto;" src="./assets/no-image.png"
-                                 alt="C&C MPS">
-                        </div>
-                        <div class="text-xl pt-5 block font-bold">Intern C# Developer</div>
-                        <div class="text-sm pb-4">C&C MPS · 2013</div>
-                        <div>
-                            Creation of Responsive Form/Frame in Visual Studio 2010, for a perfumery company management
-                            application.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Education -->
+    <section class="school">
+        <h2 class="section-title center reveal">School</h2>
+        <ul class="rows static reveal">
+            <li><div><span class="row-title">Master's, IFI Web</span><span class="row-desc">Polytech Nice Sophia</span><span class="row-date">2016 – 2018</span></div></li>
+            <li><div><span class="row-title">Bachelor's, SIL IDSE</span><span class="row-desc">Université Nice Sophia Antipolis</span><span class="row-date">2015 – 2016</span></div></li>
+            <li><div><span class="row-title">BTS SIO</span><span class="row-desc">UFIP Business School</span><span class="row-date">2013 – 2015</span></div></li>
+        </ul>
     </section>
 
-    <!-- Fin de page -->
-    <section class="py-14 print-hidden">
-        <div class="flex">
-            <div class="flex-1 self-end">
-                <h1 class="font-extrabold text-3xl">Jérémy Froment</h1>
-            </div>
-            <div class="flex-1 text-right self-end">
-                <div class="font-bold inline">Follow me</div>
-                <div class="inline flex space-x-4 justify-end">
-                    <a target="_blank" href="https://www.linkedin.com/in/jeremyfroment/"
-                       class="hover:text-blue-600 dark:hover:text-blue-300">
-                        <i class="fab fa-linkedin fa-2x"></i>
-                    </a>
-                    <a target="_blank" href="https://github.com/jeremy-le-dev"
-                       class="hover:text-blue-600 dark:hover:text-blue-300">
-                        <i class="fab fa-github-square fa-2x"></i>
-                    </a>
-                </div>
-            </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-doodle reveal" aria-hidden="true">
+            <svg viewBox="0 0 200 60" class="draw"><path d="M6 40 C30 10 50 10 60 34 C70 56 92 52 100 30 C108 8 132 10 140 32 C148 52 172 54 194 22"/></svg>
         </div>
-        <hr class="my-5">
-        <div class="text-lg">© <span id="year"></span> Jérémy Froment. All rights reserved.</div>
-    </section>
-</div>
+        <h2 class="lead reveal">Let's talk.</h2>
+        <p class="reveal">Got a project or a role in mind? My inbox is open.</p>
+        <div class="btns center reveal">
+            <a class="btn solid" href="mailto:jeremyfroment@yahoo.fr">Say hello <span class="arr">→</span></a>
+        </div>
+        <p class="copyright">© <span id="year">2026</span> Jérémy Froment</p>
+    </footer>
+</main>
+
+<div class="lightbox" id="lightbox" hidden><img alt=""></div>
+
+<script type="module" src="./src/main.js"></script>
 </body>
 </html>
-<script type="module">
-    import pdfURL from "./assets/Jérémy FROMENT - CV.pdf?url";
-    import AOS from 'aos';
-    AOS.init();
-
-    /**
-     * Check if dark theme is applicable
-     * @returns {boolean|boolean}
-     */
-    const checkIfDarkTheme = () => {
-        return localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    };
-
-    /**
-     * Set Theme by mode
-     * @param mode
-     */
-    const setTheme = (mode) => {
-        switch (mode) {
-            case 'dark':
-                localStorage.theme = 'dark';
-                document.documentElement.classList.add('dark');
-                break;
-            case 'light':
-                localStorage.theme = 'light'
-                document.documentElement.classList.remove('dark');
-                break;
-            case 'inverse':
-                if (checkIfDarkTheme()) {
-                    setTheme('light');
-                } else {
-                    setTheme('dark');
-                }
-                break;
-            default:
-                if (checkIfDarkTheme()) {
-                    setTheme('dark');
-                } else {
-                    setTheme('light');
-                }
-                break;
-        }
-    };
-
-    /**
-     * Get Age from date
-     * @param date
-     * @returns {number}
-     */
-    const getAge = (date) => {
-        var diff = Date.now() - date.getTime();
-        var age = new Date(diff);
-        return Math.abs(age.getUTCFullYear() - 1970);
-    };
-
-    /**
-     * Set Age
-     */
-    const setAge = () => {
-        document.getElementById('age').innerHTML = getAge(new Date(1994, 11, 8));
-    };
-
-    /**
-     * Set Copyright Year
-     */
-    const setCopyrightYear = () => {
-        document.getElementById("year").innerHTML = new Date().getFullYear();
-    };
-
-    /**
-     * Set print mode
-     * @param active
-     */
-    const printMode = (active) => {
-        console.error('print mode');
-        const allPrintHidden = document.querySelectorAll('.print-hidden');
-        const allPrintShow = document.querySelectorAll('.print-show');
-        if (active) {
-            allPrintHidden.forEach(el => el.style.display = 'none')
-            allPrintShow.forEach(el => el.style.display = 'block')
-            document.querySelectorAll('[data-aos-delay]').forEach(el => el.setAttribute('data-aos-delay', 0));
-            document.querySelectorAll('[data-aos-duration]').forEach(el => el.setAttribute('data-aos-duration', 0));
-        } else {
-            allPrintHidden.forEach(el => el.style.display = 'block')
-            allPrintShow.forEach(el => el.style.display = 'none')
-        }
-    };
-
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-
-    document.querySelector("#download-pdf").href = pdfURL;
-    setCopyrightYear()
-    setAge();
-    setTheme();
-    printMode(params.print);
-
-    document.querySelector('#btn-change-theme').addEventListener('click', () => setTheme('inverse'));
-</script>
