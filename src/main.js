@@ -69,6 +69,7 @@ let shownLen = 0, targetLen = 0, raf = 0;
 let docked = false;                       // phones: no thread, the head sits in a corner
 let swing = 0, swingVel = 0, lastX = null; // pendulum
 let currentZone = null;
+let built = false, intro = false;
 
 const buildThread = () => {
     const sections = [...document.querySelectorAll('main > section:not(.hero), main > footer')];
@@ -80,7 +81,7 @@ const buildThread = () => {
     head.classList.toggle('docked', docked);
     thread.style.display = docked ? 'none' : '';
     head.style.transform = '';
-    if (docked) { samples = []; checkZone(); return; }
+    if (docked) { samples = []; head.classList.add('ready'); checkZone(); return; }
 
     const docH = document.documentElement.scrollHeight;
     const w = innerWidth;
@@ -123,9 +124,21 @@ const buildThread = () => {
         samples.push({ len, y: maxY });
     }
     updateTarget();
-    shownLen = targetLen;
-    lastX = null;
-    render();
+    if (!built) {
+        // First build: draw the thread down from the top and let the portrait drop in
+        built = true;
+        intro = true;
+        shownLen = 0;
+        lastX = null;
+        render();
+        requestAnimationFrame(() => head.classList.add('ready'));
+        if (!raf) raf = requestAnimationFrame(tick);
+    } else {
+        // Later rebuilds (fonts, images, resize): keep gliding from where we are
+        shownLen = Math.min(shownLen, threadLen);
+        lastX = null;
+        if (!raf) raf = requestAnimationFrame(tick);
+    }
 };
 
 // The tip follows a line a little below the middle of the screen
@@ -164,7 +177,8 @@ const render = () => {
 // Ease the tip toward its target so it glides instead of jumping, and let the pendulum settle
 const tick = () => {
     const diff = targetLen - shownLen;
-    shownLen += Math.abs(diff) < 0.5 ? diff : diff * 0.14;
+    shownLen += Math.abs(diff) < 0.5 ? diff : diff * (intro ? 0.07 : 0.14);
+    if (intro && Math.abs(diff) < 2) intro = false;
     render();
     const busy = Math.abs(targetLen - shownLen) > 0.5 || Math.abs(swingVel) > 0.02 || Math.abs(swing) > 0.1;
     raf = busy ? requestAnimationFrame(tick) : 0;
@@ -297,13 +311,16 @@ addEventListener('scroll', () => {
     updateTarget();
     if (!raf) raf = requestAnimationFrame(tick);
 }, { passive: true });
+// Rebuild whenever the page height changes (late fonts and images on a first visit, resize...)
 let resizeTimer;
-addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(buildThread, 120); });
-addEventListener('load', () => {
+const scheduleBuild = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(buildThread, 120); };
+addEventListener('resize', scheduleBuild);
+new ResizeObserver(scheduleBuild).observe(document.querySelector('main'));
+// Start once fonts are in (or after a short wait), so the first layout is the real one
+Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 1200))]).then(() => {
     buildThread();
-    setTimeout(() => { if (scrollY < 200) say("Hi, that's me! 👋", 2600); }, 900);
+    setTimeout(() => { if (scrollY < 200) say("Hi, that's me! 👋", 2600); }, 1300);
 });
-document.fonts?.ready.then(buildThread);
 
 /* ---------- Draggable screenshot cards + lightbox ---------- */
 const board = document.getElementById('board');
