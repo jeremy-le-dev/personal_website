@@ -222,6 +222,10 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 .tip-head.docked { position: fixed; top: auto; left: auto; right: 84px; bottom: 120px; transform: scale(.5) !important; }
 .tip-head.docked .tip-bubble { font-size: 24px; }
 
+/* Phones: a smaller portrait hanging from a thread down the right edge */
+.tip-head.compact .tip-tilt { scale: .45; }
+.tip-head.compact .tip-bubble { left: auto; right: -14px; bottom: 4px; font-size: 14px; padding: 6px 11px; border-radius: 16px 16px 4px 16px; transform-origin: 100% 100%; box-shadow: -3px 3px 0 var(--accent); }
+
 /* ---------- Theme toggle ---------- */
 .theme-toggle {
     position: fixed; top: 20px; right: 20px; z-index: 20;
@@ -253,7 +257,7 @@ body.print .print-show { display: block; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
-    section, footer { padding: 80px 20px; }
+    section, footer { padding: 80px 52px 80px 20px; }
     .feature { grid-template-columns: 1fr; }
     .card.phone { width: 70%; justify-self: center; }
     .rows a, .rows li > div { grid-template-columns: 1fr auto; gap: 4px 16px; }
