@@ -93,7 +93,7 @@ const buildThread = () => {
     if (docked) { samples = []; head.classList.add('ready'); checkZone(); return; }
 
     const docH = document.documentElement.scrollHeight;
-    const w = innerWidth;
+    const w = document.documentElement.clientWidth; // without the scrollbar, like the SVG itself
     thread.setAttribute('viewBox', `0 0 ${w} ${docH}`);
     thread.style.height = `${docH}px`;
 
@@ -186,6 +186,8 @@ const updateTarget = () => {
 const headPoint = (len) => {
     const p = threadPath.getPointAtLength(len);
     const q = threadPath.getPointAtLength(Math.max(0, len - 6));
+    // On phones the pendant hangs straight down, so it stays centred under the knot even in the loops
+    if (compact) return { hx: p.x, hy: p.y + 16 };
     const rad = Math.atan2(p.y - q.y, p.x - q.x);
     return { hx: p.x + Math.cos(rad) * 16, hy: p.y + Math.sin(rad) * 16 };
 };
@@ -194,7 +196,7 @@ const render = () => {
     threadPath.style.strokeDashoffset = threadLen - shownLen;
     const p = threadPath.getPointAtLength(Math.max(0, shownLen));
     const q = threadPath.getPointAtLength(Math.max(0, shownLen - 6));
-    const angle = Math.atan2(p.y - q.y, p.x - q.x) * 180 / Math.PI;
+    const angle = compact ? 90 : Math.atan2(p.y - q.y, p.x - q.x) * 180 / Math.PI;
     knot.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${angle - 90})`);
 
     // The portrait hangs from the knot like a pendant and swings when the thread moves sideways
@@ -206,7 +208,7 @@ const render = () => {
     swingVel *= 0.86;
     swing += swingVel;
     tilt.style.transform = `rotate(${swing.toFixed(2)}deg)`;
-    head.classList.toggle('flip', hx > innerWidth / 2);
+    head.classList.toggle('flip', hx > document.documentElement.clientWidth / 2);
     checkZone();
 };
 
