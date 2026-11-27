@@ -100,7 +100,7 @@ const buildThread = () => {
     let d;
     if (compact) {
         // Phones: a thin thread down the right edge, wiggling a little and looping at each section
-        const x0 = w - 24;
+        const x0 = w - 36; // keeps the whole portrait on screen
         d = `M ${x0} -4`;
         let y = -4, k = 0;
         const loops = sections.map((s) => s.getBoundingClientRect().top + scrollY + 70);
@@ -407,7 +407,7 @@ const exitLoader = () => {
     // Where the portrait will hang once the thread has drawn itself
     const { hx, hy } = headPoint(targetLen);
     const from = stage.getBoundingClientRect();
-    const fromX = from.left + 60, fromY = from.top + 10; // the pivot the portrait hangs from
+    const fromX = from.left + 67, fromY = from.top + 10; // the pivot the portrait hangs from
     const dx = hx - scrollX - fromX, dy = hy - scrollY - fromY;
 
     head.style.visibility = 'hidden';

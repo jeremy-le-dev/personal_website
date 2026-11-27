@@ -191,7 +191,8 @@ section, footer { max-width: 960px; margin: 0 auto; padding: 120px 24px; }
 /* ---------- My portrait hanging from the tip of the thread ---------- */
 .tip-head { position: absolute; top: 0; left: 0; z-index: 5; pointer-events: none; width: 0; height: 0; opacity: 0; }
 .tip-head.ready { opacity: 1; transition: opacity .4s ease; }
-.tip-tilt { position: absolute; left: -60px; top: -10px; width: 120px; height: 124px; transform-origin: 60px 10px; }
+/* the face sits a bit right of the photo's center (x≈67/120): hang it so the face is right under the knot */
+.tip-tilt { position: absolute; left: -67px; top: -10px; width: 120px; height: 124px; transform-origin: 67px 10px; }
 .tip-body { position: absolute; inset: 0; perspective: 400px; transform-origin: 50% 70%; }
 .tip-body img {
     position: relative; z-index: 1; display: block; width: 100%; height: auto;
