@@ -51,7 +51,7 @@ const io = new IntersectionObserver((entries) => {
         }
     });
 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+const startReveals = () => document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
 /* ---------- A thread that draws itself as you scroll, with my head hanging from its tip ---------- */
 const thread = document.getElementById('thread');
@@ -66,7 +66,13 @@ const bubble = document.getElementById('tip-bubble');
 
 let threadLen = 0, samples = [], reactZones = [];
 let shownLen = 0, targetLen = 0, raf = 0;
-let docked = false;                       // phones: no thread, the head sits in a corner
+let docked = false;                       // reduced motion: no thread, the head sits in a corner
+let compact = false;                      // phones: a thinner thread down the right edge, smaller head
+let headScale = 1;
+let started = false;                      // the thread waits for the loader before it moves
+let introStart = 0, introFrom = 0;
+const INTRO_MS = 1100;
+const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
 let swing = 0, swingVel = 0, lastX = null; // pendulum
 let currentZone = null;
 let built = false, intro = false;
@@ -77,16 +83,38 @@ const buildThread = () => {
         el: s, y: s.getBoundingClientRect().top + scrollY + 70,
         react: s.dataset.react, say: s.dataset.say,
     }));
-    docked = reduceMotion || innerWidth < 760;
+    docked = reduceMotion;
+    compact = !docked && innerWidth < 760;
+    headScale = compact ? 0.45 : 1;
     head.classList.toggle('docked', docked);
+    head.classList.toggle('compact', compact);
     thread.style.display = docked ? 'none' : '';
     head.style.transform = '';
     if (docked) { samples = []; head.classList.add('ready'); checkZone(); return; }
 
     const docH = document.documentElement.scrollHeight;
-    const w = innerWidth;
+    const w = document.documentElement.clientWidth; // without the scrollbar, like the SVG itself
     thread.setAttribute('viewBox', `0 0 ${w} ${docH}`);
     thread.style.height = `${docH}px`;
+
+    let d;
+    if (compact) {
+        // Phones: a thin thread down the right edge, wiggling a little and looping at each section
+        const x0 = w - 36; // keeps the whole portrait on screen
+        d = `M ${x0} -4`;
+        let y = -4, k = 0;
+        const loops = sections.map((s) => s.getBoundingClientRect().top + scrollY + 70);
+        const end = docH - 160;
+        while (y < end) {
+            const next = Math.min(end, y + 220);
+            const sway = k++ % 2 ? 7 : -7;
+            d += ` C ${x0 + sway} ${y + 80}, ${x0 - sway} ${next - 80}, ${x0} ${next}`;
+            if (loops.length && next >= loops[0]) { loops.shift(); d += ` c -14 14, -6 34, 4 26`; }
+            y = next;
+        }
+        buildFromPath(d);
+        return;
+    }
 
     // Starts at the very top, runs down the margin beside the intro, then down the margins
     // beside each section, crossing over only in the empty gap between sections.
@@ -96,7 +124,7 @@ const buildThread = () => {
     const heroGutter = Math.max(40, heroText.left - 150);
     const heroBottom = hero.getBoundingClientRect().bottom + scrollY;
     let x = heroGutter, y = heroBottom - 60;
-    let d = `M ${heroGutter + 40} -4 C ${heroGutter + 40} 90, ${heroGutter - 14} 160, ${heroGutter} 260`;
+    d = `M ${heroGutter + 40} -4 C ${heroGutter + 40} 90, ${heroGutter - 14} 160, ${heroGutter} 260`;
     d += ` C ${heroGutter + 16} ${heroBottom * 0.5}, ${heroGutter - 20} ${heroBottom * 0.7}, ${x} ${y}`;
     sections.forEach((s, i) => {
         const r = s.getBoundingClientRect();
@@ -111,6 +139,10 @@ const buildThread = () => {
         d += ` C ${side - sway} ${mid + 40}, ${side + sway} ${exit - 60}, ${side} ${exit}`;
         x = side; y = exit;
     });
+    buildFromPath(d);
+};
+
+const buildFromPath = (d) => {
     threadPath.setAttribute('d', d);
     threadLen = threadPath.getTotalLength();
     threadPath.style.strokeDasharray = threadLen;
@@ -125,15 +157,12 @@ const buildThread = () => {
     }
     updateTarget();
     if (!built) {
-        // First build: draw the thread down from the top and let the portrait drop in
+        // First build happens behind the loader: nothing drawn yet
         built = true;
-        intro = true;
         shownLen = 0;
         lastX = null;
         render();
-        requestAnimationFrame(() => head.classList.add('ready'));
-        if (!raf) raf = requestAnimationFrame(tick);
-    } else {
+    } else if (started) {
         // Later rebuilds (fonts, images, resize): keep gliding from where we are
         shownLen = Math.min(shownLen, threadLen);
         lastX = null;
@@ -153,16 +182,25 @@ const updateTarget = () => {
     targetLen = samples[lo].len;
 };
 
+// Where the portrait hangs for a given length of thread
+const headPoint = (len) => {
+    const p = threadPath.getPointAtLength(len);
+    const q = threadPath.getPointAtLength(Math.max(0, len - 6));
+    // On phones the pendant hangs straight down, so it stays centred under the knot even in the loops
+    if (compact) return { hx: p.x, hy: p.y + 16 };
+    const rad = Math.atan2(p.y - q.y, p.x - q.x);
+    return { hx: p.x + Math.cos(rad) * 16, hy: p.y + Math.sin(rad) * 16 };
+};
+
 const render = () => {
     threadPath.style.strokeDashoffset = threadLen - shownLen;
     const p = threadPath.getPointAtLength(Math.max(0, shownLen));
     const q = threadPath.getPointAtLength(Math.max(0, shownLen - 6));
-    const angle = Math.atan2(p.y - q.y, p.x - q.x) * 180 / Math.PI;
+    const angle = compact ? 90 : Math.atan2(p.y - q.y, p.x - q.x) * 180 / Math.PI;
     knot.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${angle - 90})`);
 
     // The portrait hangs from the knot like a pendant and swings when the thread moves sideways
-    const rad = angle * Math.PI / 180;
-    const hx = p.x + Math.cos(rad) * 16, hy = p.y + Math.sin(rad) * 16;
+    const { hx, hy } = headPoint(Math.max(0, shownLen));
     head.style.transform = `translate(${hx}px, ${hy}px)`;
     const vx = lastX === null ? 0 : hx - lastX;
     lastX = hx;
@@ -170,17 +208,22 @@ const render = () => {
     swingVel *= 0.86;
     swing += swingVel;
     tilt.style.transform = `rotate(${swing.toFixed(2)}deg)`;
-    head.classList.toggle('flip', hx > innerWidth / 2);
+    head.classList.toggle('flip', hx > document.documentElement.clientWidth / 2);
     checkZone();
 };
 
 // Ease the tip toward its target so it glides instead of jumping, and let the pendulum settle
 const tick = () => {
-    const diff = targetLen - shownLen;
-    shownLen += Math.abs(diff) < 0.5 ? diff : diff * (intro ? 0.07 : 0.14);
-    if (intro && Math.abs(diff) < 2) intro = false;
+    if (intro) {
+        const t = Math.min(1, (performance.now() - introStart) / INTRO_MS);
+        shownLen = introFrom + (targetLen - introFrom) * easeOutCubic(t);
+        if (t >= 1) intro = false;
+    } else {
+        const diff = targetLen - shownLen;
+        shownLen += Math.abs(diff) < 0.5 ? diff : diff * 0.14;
+    }
     render();
-    const busy = Math.abs(targetLen - shownLen) > 0.5 || Math.abs(swingVel) > 0.02 || Math.abs(swing) > 0.1;
+    const busy = intro || Math.abs(targetLen - shownLen) > 0.5 || Math.abs(swingVel) > 0.02 || Math.abs(swing) > 0.1;
     raf = busy ? requestAnimationFrame(tick) : 0;
 };
 
@@ -307,6 +350,7 @@ const react = ({ react: name, say: text }) => {
 };
 
 addEventListener('scroll', () => {
+    if (!started) return;
     if (docked) { checkZone(); return; }
     updateTarget();
     if (!raf) raf = requestAnimationFrame(tick);
@@ -316,11 +360,87 @@ let resizeTimer;
 const scheduleBuild = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(buildThread, 120); };
 addEventListener('resize', scheduleBuild);
 new ResizeObserver(scheduleBuild).observe(document.querySelector('main'));
-// Start once fonts are in (or after a short wait), so the first layout is the real one
-Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 1200))]).then(() => {
+/* ---------- Loader: wait until everything is really ready, then hand over to the thread ---------- */
+const loader = document.getElementById('loader');
+const stage = document.getElementById('loader-stage');
+const count = document.getElementById('loader-count');
+const loaderStart = performance.now();
+const MIN_MS = 900, MAX_MS = 4000; // analytics and other third parties are not waited for
+
+const waitImage = (img) => (img.complete && img.naturalWidth
+    ? (img.decode ? img.decode().catch(() => {}) : Promise.resolve())
+    : new Promise((r) => { img.addEventListener('load', r, { once: true }); img.addEventListener('error', r, { once: true }); })
+        .then(() => img.decode?.().catch(() => {})));
+const tasks = [
+    // fonts: wait, but never more than 2.5 s for a slow font server
+    Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 2500))]),
+    ...[...document.images].filter((img) => img.getAttribute('src')).map(waitImage),
+];
+let done = 0;
+tasks.forEach((t) => t.then(() => { done++; }));
+const allReady = Promise.race([Promise.all(tasks), new Promise((r) => setTimeout(r, MAX_MS))]);
+let isReady = false;
+allReady.then(() => { isReady = true; });
+
+let shownP = 0;
+const loaderTick = () => {
+    const realP = isReady ? 1 : done / tasks.length;
+    const elapsed = performance.now() - loaderStart;
+    // never run ahead of the clock, so the fill always takes at least MIN_MS
+    const goal = Math.min(realP, elapsed / MIN_MS);
+    shownP += (goal - shownP) * 0.12;
+    if (goal === 1 && shownP > 0.995) shownP = 1;
+    loader.style.setProperty('--p', shownP.toFixed(4));
+    count.textContent = `${Math.round(shownP * 100)}%`;
+    if (shownP < 1) requestAnimationFrame(loaderTick);
+    else requestAnimationFrame(() => requestAnimationFrame(exitLoader));
+};
+
+const exitLoader = () => {
     buildThread();
-    setTimeout(() => { if (scrollY < 200) say("Hi, that's me! 👋", 2600); }, 1300);
-});
+    started = true;
+    head.classList.add('ready');
+    if (docked) {
+        // reduced motion: just a quiet fade
+        loader.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }).finished.then(() => loader.remove());
+        startReveals();
+        return;
+    }
+    // Where the portrait will hang once the thread has drawn itself
+    const { hx, hy } = headPoint(targetLen);
+    const from = stage.getBoundingClientRect();
+    const fromX = from.left + 67, fromY = from.top + 10; // the pivot the portrait hangs from
+    const dx = hx - scrollX - fromX, dy = hy - scrollY - fromY;
+
+    head.style.visibility = 'hidden';
+    stage.style.animation = 'none';
+    count.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(8px)' }], { duration: 200, fill: 'forwards' });
+    document.getElementById('loader-thread').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
+    stage.animate([
+        { transform: 'translate(0, 0) scale(1) rotate(0deg)' },
+        { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 40}px) scale(${(1 + headScale) / 2 * 1.08}) rotate(${dx > 0 ? 8 : -8}deg)`, offset: 0.5 },
+        { transform: `translate(${dx}px, ${dy}px) scale(${headScale}) rotate(0deg)` },
+    ], { duration: INTRO_MS, easing: 'cubic-bezier(.45, 0, .2, 1)', fill: 'forwards' });
+    loader.animate([{ backgroundColor: getComputedStyle(loader).backgroundColor }, { backgroundColor: 'transparent' }],
+        { duration: 600, delay: 150, easing: 'ease-out', fill: 'forwards' });
+    loader.style.pointerEvents = 'none';
+
+    // the page and the thread arrive together
+    startReveals();
+    intro = true; introStart = performance.now(); introFrom = 0;
+    if (!raf) raf = requestAnimationFrame(tick);
+
+    setTimeout(() => {
+        head.style.visibility = '';
+        loader.remove();
+        play(body, [{ transform: 'scale(1.08, .9)' }, { transform: 'scale(.96, 1.04)' }, { transform: 'none' }], { duration: 450, easing: spring });
+        if (scrollY < 200) setTimeout(() => say("Hi, that's me! 👋", 2600), 250);
+    }, INTRO_MS);
+};
+
+// Measure the layout as soon as fonts are in, so nothing moves under the loader later
+document.fonts?.ready.then(buildThread);
+requestAnimationFrame(loaderTick);
 
 /* ---------- Draggable screenshot cards + lightbox ---------- */
 const board = document.getElementById('board');
