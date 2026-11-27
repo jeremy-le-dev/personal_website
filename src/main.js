@@ -349,6 +349,64 @@ const react = ({ react: name, say: text }) => {
     play(body.querySelector('.tip-frame'), [{ transform: 'translate(7px, 7px) rotate(3deg)' }, { transform: 'translate(12px, 12px) rotate(8deg) scale(1.06)' }, { transform: 'translate(7px, 7px) rotate(3deg)' }], { duration: 600, easing: spring });
 };
 
+/* ---------- Poke the portrait: it sways on hover and takes a hit on click ---------- */
+const kick = (amount) => {
+    swingVel += amount;
+    if (!raf) raf = requestAnimationFrame(tick);
+};
+// which side the pointer is on, relative to the face: hitting the right side swings it to the left
+const hitSide = (e) => {
+    const r = body.getBoundingClientRect();
+    return e.clientX > r.left + r.width * 0.56 ? 1 : -1;
+};
+body.addEventListener('pointerenter', (e) => {
+    if (!started || docked || e.pointerType !== 'mouse') return;
+    kick(hitSide(e) * 3.5);
+    play(body, [{ transform: 'none' }, { transform: `rotate(${-hitSide(e) * 6}deg)`, offset: .3 }, { transform: `rotate(${hitSide(e) * 3}deg)`, offset: .65 }, { transform: 'none' }],
+        { duration: 650, easing: 'ease-in-out' });
+});
+const ouches = ['Ouch!', 'Hey! 😤', 'Not the face!', 'Oof 🤕', 'Rude 😅', 'Okay, okay!'];
+let hits = [], ouchIndex = 0;
+body.addEventListener('click', (e) => {
+    if (!started || docked) return;
+    const dir = hitSide(e);
+    const now = performance.now();
+    hits = hits.filter((t) => now - t < 2500).concat(now);
+    const dizzy = hits.length >= 4;
+    if (dizzy) hits = [];
+    // the punch: knocked away on the pendulum, squashed by the impact, then springs back
+    kick(dir * (dizzy ? 26 : 16));
+    body.getAnimations().forEach((a) => a.cancel());
+    play(body, [
+        { transform: 'none' },
+        { transform: `translateX(${-dir * 14}px) rotate(${dir * 18}deg) scale(.86, 1.08)`, offset: .12 },
+        { transform: `translateX(${dir * 5}px) rotate(${-dir * 8}deg) scale(1.08, .94)`, offset: .45 },
+        { transform: `rotate(${dir * 3}deg)`, offset: .75 },
+        { transform: 'none' },
+    ], { duration: 700, easing: 'ease-out' });
+    play(body.querySelector('.tip-frame'), [{ transform: 'translate(7px, 7px) rotate(3deg)' }, { transform: `translate(${7 - dir * 6}px, 10px) rotate(${3 + dir * 12}deg) scale(1.1)` }, { transform: 'translate(7px, 7px) rotate(3deg)' }], { duration: 550, easing: spring });
+    prop.getAnimations().forEach((a) => a.cancel());
+    if (dizzy) {
+        // too many hits: seeing stars
+        say('Seeing stars 😵‍💫', 1800);
+        showProp('💫', [
+            { transform: 'translate(-50%, -18px) scale(0) rotate(0)', opacity: 0 },
+            { transform: 'translate(-50%, -18px) scale(1) rotate(200deg)', opacity: 1, offset: .25 },
+            { transform: 'translate(-50%, -18px) scale(1) rotate(560deg)', opacity: 1, offset: .8 },
+            { transform: 'translate(-50%, -18px) scale(0) rotate(720deg)', opacity: 0 },
+        ], { duration: 1600, easing: 'linear' });
+        burstStars(80);
+    } else {
+        say(ouches[ouchIndex++ % ouches.length], 1300);
+        showProp('💥', [
+            { transform: `translate(-50%, 0) translate(${dir * 44}px, 34px) scale(.2)`, opacity: 1 },
+            { transform: `translate(-50%, 0) translate(${dir * 50}px, 30px) scale(1.2) rotate(${dir * 12}deg)`, opacity: 1, offset: .35 },
+            { transform: `translate(-50%, 0) translate(${dir * 54}px, 28px) scale(.8)`, opacity: 0 },
+        ], { duration: 450, easing: 'ease-out' });
+        shockLines();
+    }
+});
+
 addEventListener('scroll', () => {
     if (!started) return;
     if (docked) { checkZone(); return; }
